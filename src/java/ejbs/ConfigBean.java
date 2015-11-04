@@ -30,7 +30,7 @@ public class ConfigBean {
     public void populateDB() {
         try {
             
-            System.out.println("AAAAAAAAAAAA");
+            
             
             administratorBean.createAdministrator("Administrator_Name_01", "administrator_email_01@email.com", "Administrator_username_01", "12345678");
             administratorBean.createAdministrator("Administrator_Name_02", "administrator_email_02@email.com", "Administrator_username_02", "12345678");
@@ -40,7 +40,7 @@ public class ConfigBean {
             managerBean.createManager("Manager_Name_01", "manager_email_01@email.com", "Manager_username_01", "12345678");
             managerBean.createManager("Manager_Name_02", "manager_email_02@email.com", "Manager_username_02", "12345678");
 
-            System.out.println("BBBBBBBBBBBB");
+           
             
         } catch (Exception e) {
             System.out.println(e.getMessage());

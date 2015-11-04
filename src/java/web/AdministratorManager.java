@@ -32,8 +32,7 @@ public class AdministratorManager {
      
     @EJB
     private AdministratorBean administratorBean;
-    @EJB
-    private ManagerBean managerBean;
+    
     @EJB
     private AttendantBean attendantBean;
     @EJB
@@ -49,12 +48,7 @@ public class AdministratorManager {
     private String adminUserName;
     private String adminPassword;
     
-    //Manager
-    private Long manId;
-    private String manName;
-    private String manEmail;   
-    private String manUserName;
-    private String manPassword;
+    
     
     //Attendant
     private Long atId;
@@ -75,11 +69,9 @@ public class AdministratorManager {
     
     //Outras
     private List<Administrator> administratorsM;
-    private List<Manager> managersM;
     private List<Attendant> attendantsM;
     private List<Event> eventsM;
     private List<Category> categoriesM;
-    private Manager currentManagerM;
     private Attendant currentAttendantM;
     private Event currentEventM;
     private Administrator currentAdministratorM;
@@ -125,46 +117,6 @@ public class AdministratorManager {
 
     public void setAdminPassword(String adminPassword) {
         this.adminPassword = adminPassword;
-    }
-
-    public Long getManId() {
-        return manId;
-    }
-
-    public void setManId(Long manId) {
-        this.manId = manId;
-    }
-
-    public String getManName() {
-        return manName;
-    }
-
-    public void setManName(String manName) {
-        this.manName = manName;
-    }
-
-    public String getManEmail() {
-        return manEmail;
-    }
-
-    public void setManEmail(String manEmail) {
-        this.manEmail = manEmail;
-    }
-
-    public String getManUserName() {
-        return manUserName;
-    }
-
-    public void setManUserName(String manUserName) {
-        this.manUserName = manUserName;
-    }
-
-    public String getManPassword() {
-        return manPassword;
-    }
-
-    public void setManPassword(String manPassword) {
-        this.manPassword = manPassword;
     }
 
     public Long getAtId() {
@@ -263,14 +215,6 @@ public class AdministratorManager {
         this.administratorsM = administratorsM;
     }
 
-    public List<Manager> getManagersM() {
-        return managersM;
-    }
-
-    public void setManagersM(List<Manager> managersM) {
-        this.managersM = managersM;
-    }
-
     public List<Attendant> getAttendantsM() {
         return attendantsM;
     }
@@ -294,15 +238,7 @@ public class AdministratorManager {
     public void setCategoriesM(List<Category> categoriesM) {
         this.categoriesM = categoriesM;
     }
-
-    public Manager getCurrentManagerM() {
-        return currentManagerM;
-    }
-
-    public void setCurrentManagerM(Manager currentManagerM) {
-        this.currentManagerM = currentManagerM;
-    }
-
+    
     public Attendant getCurrentAttendantM() {
         return currentAttendantM;
     }
@@ -374,55 +310,6 @@ public class AdministratorManager {
         adminEmail = null;
         adminUserName = null;
         adminPassword = null;
-    }
-    
-    public String createManager(){
-        try {
-            managerBean.createManager(manName, manEmail, manUserName, manPassword);
-            clearNewManager();
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Vai para criação de Manager";
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }  
-    }
-    
-    public List<Manager> getAllManagers(){
-        try {
-            this.managersM = managerBean.getAllManagers();
-            return managersM; 
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    }
-    
-    public String updateManager(){
-        try {
-            managerBean.updateManager(manId, manName, manEmail, manUserName, manPassword);
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Faz update a Manager";
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-
-    public void removeManager(ActionEvent event){
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteManagerId");
-            Long id = (Long) param.getValue();
-            managerBean.removeManager(id);
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-   
-    private void clearNewManager() {
-        manName = null;
-        manEmail = null;
-        manUserName = null;
-        manPassword = null;
     }
     
     public String createAttendant(){
@@ -566,15 +453,6 @@ public class AdministratorManager {
    
     private void clearNewCategory() {
         catName = null;
-    }
- 
-    public List<Event> getAllEventsOfCurrentManager(Manager currentManager){
-        try {
-            this.eventsM = managerBean.getAllEventsOfManager(currentManager);
-            return eventsM; 
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
     }
     
     public List<Event> getAllEventsOfCurrentAttendant(Attendant currentAttendant) {
