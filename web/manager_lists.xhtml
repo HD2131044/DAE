@@ -4,15 +4,10 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Administrator Panel</title>
+        <title>Managers List</title>
     </h:head>
     <h:body>
-
-        <!--Administrator Main --> 
-        <h3 style="color: green">Administrator Panel</h3>
-        &nbsp;
-        
-        <p> <h2 style="color: greenyellow">Users List</h2> </p>
+        <p> <h2 style="color: greenyellow">Managers List</h2> </p>
         
         <hr></hr>
         <!-- Users list -->
@@ -20,7 +15,7 @@
         <h:dataTable
             var="user" 
             summary="Table of users"
-            value="#{administratorManager.allAdministrators}"
+            value="#{managerManager.allManagers}"
             rules="all"
             cellpadding="10">
             <h:column>
@@ -89,79 +84,7 @@
         </h:dataTable>
         <hr></hr>
         <h:form>
-            <h:commandButton value="New Student" action="admins_student_create?faces-redirect=true" />
+            <h:commandButton value="Back" action="administrator_panel?faces_redirect=true" />	
         </h:form>
-        
-        <hr></hr>
-        <!--menu Courses-->
-        <h2 style="color: greenyellow">Events List</h2>
-        
-        <hr></hr>
-        <!-- lista de cursos-->
-        <!-- var que vai ser mandada linha-->
-        <!--
-        <p> <h2>Courses List </h2> </p>
-        <hr></hr>
-        <h:dataTable
-            var="events" 
-            summary="Table of events"
-            value="#{administratorManager.allEvents}"
-            rules="all"
-            cellpadding="10">
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Code" />
-                </f:facet>
-                <h:form>
-                    <h:outputText value="" />
-                </h:form>
-            </h:column>
-
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Name" />
-                </f:facet>
-                <h:form>
-                    <h:outputText value="" />
-                </h:form>
-            </h:column>
-
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Number Students" />
-                </f:facet>
-                <h:form>
-                    <h:outputText value="" />
-                </h:form>
-            </h:column>
-
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Update" />
-                </f:facet>
-                <h:form>
-                    <h:commandLink id="course_update_link" action="admins_course_update?faces_redirect=true">
-                        <h:outputText value="Update" />
-                        <f:setPropertyActionListener target="" value="" />
-                    </h:commandLink>
-                </h:form>
-            </h:column>
-
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Remove" />
-                </f:facet>
-                  <h:form>
-  
-                      <h:commandLink id="course_remove_link" value="Remove" actionListener="">
-                          <f:param name="deleteCourseId" id="deleteCourseId" value="" />
-                      </h:commandLink>
-                  </h:form> 
-            </h:column>
-        </h:dataTable>
-        <hr></hr>
-        -->
-
     </h:body>
 </html>
-
