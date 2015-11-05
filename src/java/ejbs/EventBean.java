@@ -19,9 +19,9 @@ public class EventBean {
     @PersistenceContext
     private EntityManager em;
     
-    public void createEvent (String name, String startDate, String finishDate){
+    public void createEvent (String name,String description, String startDate, String finishDate){
         try {
-            Event e = new Event (name, startDate, finishDate);
+            Event e = new Event (name,description, startDate, finishDate);
             em.persist(e);   
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());

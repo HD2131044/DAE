@@ -73,8 +73,9 @@ public class Event implements Serializable {
         this.attendants = new LinkedList<>();
     }
 
-    public Event(String name,String startDate, String finishDate) {
+    public Event(String name,String description ,String startDate, String finishDate) {
         this.name = name;
+        this.description=description;
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.categories = new LinkedList<>();

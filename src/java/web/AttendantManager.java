@@ -62,6 +62,7 @@ public class AttendantManager {
     //Event
     private Long evId;
     private String evName;
+    private String evDescription;
     private String evStartDate;
     private String evFinishDate;
     
@@ -321,7 +322,14 @@ public class AttendantManager {
     public void setCurrentAdministratorM(Administrator currentAdministratorM) {
         this.currentAdministratorM = currentAdministratorM;
     }
+    
+    public String getEvDescription() {
+        return evDescription;
+    }
 
+    public void setEvDescription(String evDescription) {
+        this.evDescription = evDescription;
+    }
 
     public String createAdministrator(){
         try {
@@ -433,7 +441,7 @@ public class AttendantManager {
         }  
     }
     
-    public List<Attendant> getAllAttendats(){
+    public List<Attendant> getAllAttendants(){
         try {
             this.attendantsM = attendantBean.getAllAttendants();
             return attendantsM; 
@@ -472,7 +480,7 @@ public class AttendantManager {
     
     public String createEvent(){
         try {
-            eventBean.createEvent(evName, evStartDate, evFinishDate);
+            eventBean.createEvent(evName,evDescription, evStartDate, evFinishDate);
             clearNewEvent();
             //escolher acção
             //return (String) "index?faces-redirect=true";

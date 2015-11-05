@@ -39,7 +39,29 @@ public class ConfigBean {
             
             managerBean.createManager("Manager_Name_01", "manager_email_01@email.com", "Manager_username_01", "12345678");
             managerBean.createManager("Manager_Name_02", "manager_email_02@email.com", "Manager_username_02", "12345678");
+            
+            attendantBean.createAttendant("Attendant_Name_01", "attendant_email_01@email.com", "Attendant_username_01", "12345678");
+            attendantBean.createAttendant("Attendant_Name_02", "attendant_email_02@email.com", "Attendant_username_02", "12345678");
+            attendantBean.createAttendant("Attendant_Name_03", "attendant_email_03@email.com", "Attendant_username_03", "12345678");
+            attendantBean.createAttendant("Attendant_Name_04", "attendant_email_04@email.com", "Attendant_username_04", "12345678");
+            attendantBean.createAttendant("Attendant_Name_05", "attendant_email_05@email.com", "Attendant_username_05", "12345678");
+            attendantBean.createAttendant("Attendant_Name_06", "attendant_email_06@email.com", "Attendant_username_06", "12345678");
+            attendantBean.createAttendant("Attendant_Name_07", "attendant_email_07@email.com", "Attendant_username_07", "12345678");
+            attendantBean.createAttendant("Attendant_Name_08", "attendant_email_08@email.com", "Attendant_username_08", "12345678");
+            attendantBean.createAttendant("Attendant_Name_09", "attendant_email_09@email.com", "Attendant_username_09", "12345678");
 
+           eventBean.createEvent("Evento_1","Descricao Evento_1", "12:00 01-10-2015", "13:00 01-10-2015");
+           eventBean.createEvent("Evento_2","Descricao Evento_2", "12:00 08-10-2015", "13:00 08-10-2015");
+           eventBean.createEvent("Evento_3","Descricao Evento_3", "12:00 09-10-2015", "13:00 09-10-2015");
+           eventBean.createEvent("Evento_4","Descricao Evento_4", "12:00 01-11-2015", "13:00 01-11-2015");
+           eventBean.createEvent("Evento_5","Descricao Evento_5", "15:00 01-10-2015", "17:00 01-10-2015");
+           eventBean.createEvent("Evento_6","Descricao Evento_6", "12:00 01-11-2015", "12:00 02-11-2015");
+           eventBean.createEvent("Evento_7","Descricao Evento_7", "12:00 01-10-2015", "13:00 01-10-2015");
+           eventBean.createEvent("Evento_8","Descricao Evento_8", "16:00 01-10-2015", "17:00 01-10-2015");
+           eventBean.createEvent("Evento_9","Descricao Evento_9", "12:00 01-10-2015", "13:00 01-10-2015");
+           eventBean.createEvent("Evento_10","Descricao Evento_10", "18:00 01-10-2015", "19:00 01-10-2015");
+           eventBean.createEvent("Evento_11","Descricao Evento_11", "20:00 01-10-2015", "23:00 01-10-2015");
+           eventBean.createEvent("Evento_12","Descricao Evento_12", "14:00 01-11-2015", "18:00 01-11-2015");
            
             
         } catch (Exception e) {

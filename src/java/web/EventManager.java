@@ -9,17 +9,15 @@ import ejbs.AdministratorBean;
 import ejbs.AttendantBean;
 import ejbs.CategoryBean;
 import ejbs.EventBean;
-import ejbs.ManagerBean;
 import entities.Administrator;
 import entities.Attendant;
 import entities.Category;
 import entities.Event;
-import entities.Manager;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 
@@ -27,9 +25,10 @@ import javax.faces.event.ActionEvent;
 
 
 @ManagedBean
-@SessionScoped
-public class AdministratorManager { 
-     
+@RequestScoped
+public class EventManager { 
+  
+      
     @EJB
     private AdministratorBean administratorBean;
     
@@ -77,7 +76,7 @@ public class AdministratorManager {
     private Event currentEventM;
     private Administrator currentAdministratorM;
 
-    public AdministratorManager() {
+    public EventManager() {
     }
    
     public Long getAdminId() {
@@ -271,105 +270,7 @@ public class AdministratorManager {
     public void setEvDescription(String evDescription) {
         this.evDescription = evDescription;
     }
-    
    
-    public String createAdministrator(){
-        try {
-            administratorBean.createAdministrator(adminName, adminEmail, adminUserName, adminPassword);
-            clearNewAdministrator();
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Vai para criação de Administrador";
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }  
-    }
-    
-    public List<Administrator> getAllAdministrators(){
-        try {
-            this.administratorsM = administratorBean.getAllAdministrators();
-            return administratorsM; 
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    } 
-    
-    public String updateAdministrator(){
-        try {
-            administratorBean.updateAdministrator(adminId, adminName, adminEmail, adminUserName, adminPassword);
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Faz update a Administrador";
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-
-    public void removeAdministrator(ActionEvent event){
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteAdministratorId");
-            Long id = (Long) param.getValue();
-            administratorBean.removeAdministrator(id);
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-   
-    private void clearNewAdministrator() {
-        adminName = null;
-        adminEmail = null;
-        adminUserName = null;
-        adminPassword = null;
-    }
-    
-    public String createAttendant(){
-        try {
-            attendantBean.createAttendant(atName, atEmail, atUserName, atPassword);
-            clearNewAttendant();
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Vai para criação de Attendant";
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }  
-    }
-    
-    public List<Attendant> getAllAttendats(){
-        try {
-            this.attendantsM = attendantBean.getAllAttendants();
-            return attendantsM; 
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    }
-    
-    public String updateAttendat(){
-        try {
-            attendantBean.updateAttendant(atId, atName, atEmail, atUserName, atPassword);
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Faz update a Attendant";
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-
-    public void removeAttendant(ActionEvent event){
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteAttendantId");
-            Long id = (Long) param.getValue();
-            attendantBean.removeAttendant(id);
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-   
-    private void clearNewAttendant() {
-        atName = null;
-        atEmail = null;
-        atUserName = null;
-        atPassword = null;
-    }
     
     public String createEvent(){
         try {
@@ -418,52 +319,7 @@ public class AdministratorManager {
         evStartDate = null;
         evFinishDate = null;
     }
-    
-    public String createCategory(){
-        try {
-            categoryBean.createCategory(catName);
-            clearNewCategory();
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Vai para criação de Category";
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }  
-    }
-    
-    public List<Category> getAllCategories(){
-        try {
-            this.categoriesM = categoryBean.getAllCategories();
-            return categoriesM; 
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    }
-    
-    public String updateCategory(){
-        try {
-            categoryBean.updateCategory(catId, catName);
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Faz update a Category";
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-
-    public void removeCategory(ActionEvent event){
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteCategoryId");
-            Long id = (Long) param.getValue();
-            categoryBean.removeCategory(id);
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
    
-    private void clearNewCategory() {
-        catName = null;
-    }
     
     public List<Event> getAllEventsOfCurrentAttendant(Attendant currentAttendant) {
         try {
