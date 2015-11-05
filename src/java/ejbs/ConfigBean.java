@@ -63,6 +63,15 @@ public class ConfigBean {
            eventBean.createEvent("Evento_11","Descricao Evento_11", "20:00 01-10-2015", "23:00 01-10-2015");
            eventBean.createEvent("Evento_12","Descricao Evento_12", "14:00 01-11-2015", "18:00 01-11-2015");
            
+           categoryBean.createCategory("Categoria_1");
+           categoryBean.createCategory("Categoria_2");
+           categoryBean.createCategory("Categoria_3");
+           categoryBean.createCategory("Categoria_4");
+           categoryBean.createCategory("Categoria_5");
+           categoryBean.createCategory("Categoria_6");
+           categoryBean.createCategory("Categoria_7");
+           
+         
             
         } catch (Exception e) {
             System.out.println(e.getMessage());
