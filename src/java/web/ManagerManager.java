@@ -32,6 +32,7 @@ public class ManagerManager {
     private String manEmail;   
     private String manUserName;
     private String manPassword;
+    private String manPasswordConfirm;
     
     private List<Manager> managersM;
     private Manager currentManagerM;
@@ -54,12 +55,16 @@ public class ManagerManager {
     }
     
     public String createManager(){
-        try {
+        try {if(manPassword.equals(manPasswordConfirm)){
             managerBean.createManager(manName, manEmail, manUserName, manPassword);
             clearNewManager();
             //escolher acção
             //return (String) "index?faces-redirect=true";
-            return (String) "Vai para criação de Manager";
+           return "administrator_panel?faces-redirect=true";
+            
+            }
+            
+            return "administrator_create?faces-redirect=true";
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }  
@@ -157,5 +162,14 @@ public class ManagerManager {
     public void setCurrentManagerM(Manager currentManagerM) {
         this.currentManagerM = currentManagerM;
     }
+
+    public String getManPasswordConfirm() {
+        return manPasswordConfirm;
+    }
+
+    public void setManPasswordConfirm(String manPasswordConfirm) {
+        this.manPasswordConfirm = manPasswordConfirm;
+    }
+    
 
 }
