@@ -29,7 +29,7 @@ public class ManagerBean {
             throw new EJBException(ex.getMessage());
         }
     }
-    
+    /*
     public List<Manager> getAllManagers() {
         try {
             List<Manager> managers = (List<Manager>) em.createNamedQuery("getAllManagers").getResultList();
@@ -38,7 +38,7 @@ public class ManagerBean {
             throw new EJBException(ex.getMessage());
         }
     }
- 
+    */
      public void updateManager (Long id, String name, String email, String userName, String password){
         try {
             Manager mUpdate = em.find(Manager.class, id);
@@ -82,7 +82,7 @@ public class ManagerBean {
             throw new EJBException(ex.getMessage());
         }
      }
-
+    /*
     public List<Event> getAllEventsOfManager(Manager currentManager) {
         try {
             List<Event> events = currentManager.getEvents();
@@ -91,7 +91,17 @@ public class ManagerBean {
             throw new EJBException(ex.getMessage());
         }
     }
-    /*
+    */
+    
+    public List<Event> getAllEventsOfManager(long id) {
+        try {
+            Manager man = em.find(Manager.class, id);
+            return man.getEvents();
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());
+        }
+    }
+    
     public List<ManagerDTO> getAllManagers() {
         try {
             List<Manager> managers = (List<Manager>) em.createNamedQuery("getAllManagers").getResultList();
@@ -99,13 +109,13 @@ public class ManagerBean {
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
-    }*/
-    /*
+    }
+    
     private List<ManagerDTO> managersToDTO(List<Manager> managers) {
         List<ManagerDTO> dtos = new ArrayList<>();
         for (Manager c : managers) {
             dtos.add(new ManagerDTO(c.getId(), c.getName(), c.getEmail(), c.getPassword(), c.getUserName()));            
         }
         return dtos;    }
-    */
+    
 }

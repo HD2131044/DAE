@@ -47,7 +47,7 @@ public class ManagerManager {
     public ManagerManager() {
     
     }
-    
+    /*
     public List<Manager> getAllManagers(){
         try {
             this.managersM = managerBean.getAllManagers();
@@ -56,7 +56,7 @@ public class ManagerManager {
             throw new EJBException(ex.getMessage());       
         }
     }
-    
+    */
     public String createManager(){
         try {if(manPassword.equals(manPasswordConfirm)){
             managerBean.createManager(manName, manEmail, manUserName, manPassword);
@@ -100,7 +100,7 @@ public class ManagerManager {
         manUserName = null;
         manPassword = null;
     }
-    
+    /*
     public List<Event> getAllEventsOfCurrentManager(Manager currentManager){
         try {
             this.eventsM = managerBean.getAllEventsOfManager(currentManager);
@@ -109,7 +109,7 @@ public class ManagerManager {
             throw new EJBException(ex.getMessage());       
         }
     }
-    
+    */
      public Long getManId() {
         return manId;
     }
@@ -173,7 +173,7 @@ public class ManagerManager {
     public void setManPasswordConfirm(String manPasswordConfirm) {
         this.manPasswordConfirm = manPasswordConfirm;
     }
-    /*
+    
     public List<ManagerDTO> getAllManagers(){
         try {
             return managerBean.getAllManagers();
@@ -181,8 +181,8 @@ public class ManagerManager {
             throw new EJBException(ex.getMessage());       
         }
     }
-    */
-    /*
+    
+    
     public List<Event> getAllEventsOfCurrentManager(){
         try {
             return managerBean.getAllEventsOfManager(currentManager.getId());
@@ -190,5 +190,12 @@ public class ManagerManager {
             throw new EJBException(ex.getMessage());       
         }
     }
-    */
+    
+    public ManagerDTO getCurrentManager() {
+        return currentManager;
+    }
+    
+    public void setCurrentManager(ManagerDTO currentManager) {
+        this.currentManager = currentManager;
+    }
 }
