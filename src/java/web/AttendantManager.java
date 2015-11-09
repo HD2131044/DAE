@@ -606,6 +606,25 @@ public class AttendantManager {
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
-    }  
+    }
+    
+    /*
+    public List<ManagerDTO> getAllManagers(){
+        try {
+            return managerBean.getAllManagers();
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());       
+        }
+    }
+    */
+    /*
+    public List<Event> getAllEventsOfCurrentManager(){
+        try {
+            return managerBean.getAllEventsOfManager(currentManager.getId());
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());       
+        }
+    }
+    */
     
 }

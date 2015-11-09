@@ -5,6 +5,7 @@
  */
 package web;
 
+import dtos.ManagerDTO;
 import ejbs.ManagerBean;
 import entities.Event;
 import entities.Manager;
@@ -37,6 +38,8 @@ public class ManagerManager {
     private List<Manager> managersM;
     private Manager currentManagerM;
     private List<Event> eventsM;
+    
+    private ManagerDTO currentManager;
 
     /**
      * Creates a new instance of ManagerManager
@@ -170,6 +173,22 @@ public class ManagerManager {
     public void setManPasswordConfirm(String manPasswordConfirm) {
         this.manPasswordConfirm = manPasswordConfirm;
     }
-    
-
+    /*
+    public List<ManagerDTO> getAllManagers(){
+        try {
+            return managerBean.getAllManagers();
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());       
+        }
+    }
+    */
+    /*
+    public List<Event> getAllEventsOfCurrentManager(){
+        try {
+            return managerBean.getAllEventsOfManager(currentManager.getId());
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());       
+        }
+    }
+    */
 }

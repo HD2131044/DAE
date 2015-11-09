@@ -5,8 +5,10 @@
  */
 package ejbs;
 
+import dtos.ManagerDTO;
 import entities.Event;
 import entities.Manager;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -89,5 +91,21 @@ public class ManagerBean {
             throw new EJBException(ex.getMessage());
         }
     }
-    
+    /*
+    public List<ManagerDTO> getAllManagers() {
+        try {
+            List<Manager> managers = (List<Manager>) em.createNamedQuery("getAllManagers").getResultList();
+            return managersToDTO(managers);
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());
+        }
+    }*/
+    /*
+    private List<ManagerDTO> managersToDTO(List<Manager> managers) {
+        List<ManagerDTO> dtos = new ArrayList<>();
+        for (Manager c : managers) {
+            dtos.add(new ManagerDTO(c.getId(), c.getName(), c.getEmail(), c.getPassword(), c.getUserName()));            
+        }
+        return dtos;    }
+    */
 }
