@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package web;
+import dtos.ManagerDTO;
 import ejbs.AdministratorBean;
 import ejbs.AttendantBean;
 import ejbs.CategoryBean;
@@ -83,6 +84,8 @@ public class AttendantManager {
     private Attendant currentAttendantM;
     private Event currentEventM;
     private Administrator currentAdministratorM;
+    
+    private ManagerDTO currentManager;
 
     public AttendantManager() {
     }
@@ -402,7 +405,7 @@ public class AttendantManager {
             throw new EJBException(ex.getMessage());
         }  
     }
-    
+    /*
     public List<Manager> getAllManagers(){
         try {
             this.managersM = managerBean.getAllManagers();
@@ -411,7 +414,7 @@ public class AttendantManager {
             throw new EJBException(ex.getMessage());       
         }
     }
-    
+    */
     public String updateManager(){
         try {
             managerBean.updateManager(manId, manName, manEmail, manUserName, manPassword);
@@ -587,7 +590,7 @@ public class AttendantManager {
     private void clearNewCategory() {
         catName = null;
     }
- 
+    /*
     public List<Event> getAllEventsOfCurrentManager(Manager currentManager){
         try {
             this.eventsM = managerBean.getAllEventsOfManager(currentManager);
@@ -596,7 +599,7 @@ public class AttendantManager {
             throw new EJBException(ex.getMessage());       
         }
     }
-    
+    */
     public List<Event> getAllEventsOfCurrentAttendant(Attendant currentAttendant) {
         try {
             this.eventsM = attendantBean.getAllEventsOfAttendant(currentAttendant);
@@ -622,6 +625,25 @@ public class AttendantManager {
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
-    }  
+    }
+    
+    
+    public List<ManagerDTO> getAllManagers(){
+        try {
+            return managerBean.getAllManagers();
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());       
+        }
+    }
+    
+    
+    public List<Event> getAllEventsOfCurrentManager(){
+        try {
+            return managerBean.getAllEventsOfManager(currentManager.getId());
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());       
+        }
+    }
+    
     
 }

@@ -75,9 +75,20 @@ public class EventManager {
     private Attendant currentAttendantM;
     private Event currentEventM;
     private Administrator currentAdministratorM;
+    
+    private Event currentEvent;
 
     public EventManager() {
     }
+    
+    public Event getCurrentEvent() {
+        return currentEvent;
+    }
+
+    public void setCurrentEvent(Event currentEvent) {
+        this.currentEvent = currentEvent;
+    }
+
    
     public Long getAdminId() {
         return adminId;

@@ -23,7 +23,7 @@
                     <h:outputText value="Username" />
                 </f:facet>
                 <h:form>
-                    <h:outputText value="#{user.name}" />
+                    <h:outputText value="#{user.username}" />
                 </h:form>
             </h:column>
 
@@ -51,9 +51,9 @@
                     <h:outputText value="Details" />
                 </f:facet>
                 <h:form>
-                    <h:commandLink id="detais" action="_">
+                    <h:commandLink id="detais" action="manager_details?faces_redirect=true">
                         <h:outputText value="details" />
-                        <f:setPropertyActionListener target="#{administratorManager.currentUser}" value="#{user}" />
+                        <f:setPropertyActionListener target="#{managerManager.currentManager}" value="#{user}" />
                     </h:commandLink>  
                 </h:form>
             </h:column>
@@ -65,7 +65,7 @@
                 <h:form>
                     <h:commandLink id="user_update_link" action="_">
                         <h:outputText value="Update" />
-                        <f:setPropertyActionListener target="#{administratorManager.currentUser}" value="#{user}" />
+                        <f:setPropertyActionListener target="#{managerManager.currentManager}" value="#{user}" />
                     </h:commandLink>
                 </h:form>
             </h:column>
@@ -76,15 +76,14 @@
                 </f:facet>
                 <h:form>
 
-                    <h:commandLink id="user_remove_link" value="Remove" actionListener="#{administratorManager.removeUser}">
+                    <h:commandLink id="user_remove_link" value="Remove" actionListener="#{managerManager.removeManager}">
                         <f:param name="deleteUserId" id="deleteUserId" value="#{user.id}" />
                     </h:commandLink>
                 </h:form> 
             </h:column>
         </h:dataTable>
         <hr></hr>
-        <h:form>
-            <h:commandButton value="Back" action="administrator_panel?faces_redirect=true" />	
-        </h:form>
+        
+        
     </h:body>
 </html>

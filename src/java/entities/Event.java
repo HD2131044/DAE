@@ -77,11 +77,15 @@ public class Event implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "ATTENDANTS_ID", referencedColumnName = "ID"))
     private List<Attendant> attendants;
+    
+    private boolean OpenForEnrollment;
       
     public Event() {
         this.categories = new LinkedList<>();
         this.managers = new LinkedList<>();
         this.attendants = new LinkedList<>();
+        
+        OpenForEnrollment = false;
     }
 
     public Event(String name,String description ,String startDate, String finishDate) {
@@ -92,6 +96,16 @@ public class Event implements Serializable {
         this.categories = new LinkedList<>();
         this.managers = new LinkedList<>();
         this.attendants = new LinkedList<>();
+        
+        OpenForEnrollment = false;
+    }
+
+    public boolean isOpenForEnrollment() {
+        return OpenForEnrollment;
+    }
+
+    public void setOpenForEnrollment(boolean OpenForEnrollment) {
+        this.OpenForEnrollment = OpenForEnrollment;
     }
 
     public Long getId() {

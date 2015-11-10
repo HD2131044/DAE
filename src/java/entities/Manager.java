@@ -83,5 +83,4 @@ public class Manager extends User implements Serializable {
     public String toString() {
         return "entities.Manager[id=" + id + "]: "+ name;
     }
-    
 }
