@@ -50,18 +50,18 @@ public class ConfigBean {
             attendantBean.createAttendant("Attendant_Name_08", "attendant_email_08@email.com", "Attendant_username_08", "12345678");
             attendantBean.createAttendant("Attendant_Name_09", "attendant_email_09@email.com", "Attendant_username_09", "12345678");
 
-           eventBean.createEvent("Evento_1","Descricao Evento_1", "12:00 01-10-2015", "13:00 01-10-2015");
-           eventBean.createEvent("Evento_2","Descricao Evento_2", "12:00 08-10-2015", "13:00 08-10-2015");
-           eventBean.createEvent("Evento_3","Descricao Evento_3", "12:00 09-10-2015", "13:00 09-10-2015");
-           eventBean.createEvent("Evento_4","Descricao Evento_4", "12:00 01-11-2015", "13:00 01-11-2015");
-           eventBean.createEvent("Evento_5","Descricao Evento_5", "15:00 01-10-2015", "17:00 01-10-2015");
-           eventBean.createEvent("Evento_6","Descricao Evento_6", "12:00 01-11-2015", "12:00 02-11-2015");
-           eventBean.createEvent("Evento_7","Descricao Evento_7", "12:00 01-10-2015", "13:00 01-10-2015");
-           eventBean.createEvent("Evento_8","Descricao Evento_8", "16:00 01-10-2015", "17:00 01-10-2015");
-           eventBean.createEvent("Evento_9","Descricao Evento_9", "12:00 01-10-2015", "13:00 01-10-2015");
-           eventBean.createEvent("Evento_10","Descricao Evento_10", "18:00 01-10-2015", "19:00 01-10-2015");
-           eventBean.createEvent("Evento_11","Descricao Evento_11", "20:00 01-10-2015", "23:00 01-10-2015");
-           eventBean.createEvent("Evento_12","Descricao Evento_12", "14:00 01-11-2015", "18:00 01-11-2015");
+           eventBean.createEvent("Evento_1","Descricao Evento_1", "01/10/2015 12:00", "01/10/2015 13:00");
+           eventBean.createEvent("Evento_2","Descricao Evento_2", "08/10/2015 12:00", "08/10/2015 13:00");
+           eventBean.createEvent("Evento_3","Descricao Evento_3", "09/10/2015 12:00", "09/10/2015 13:00");
+           eventBean.createEvent("Evento_4","Descricao Evento_4", "01/11/2015 12:00", "01/11/2015 13:00");
+           eventBean.createEvent("Evento_5","Descricao Evento_5", "01/10/2015 15:00", "01/10/2015 17:00");
+           eventBean.createEvent("Evento_6","Descricao Evento_6", "01/11/2015 12:00", "02/11/2015 12:00");
+           eventBean.createEvent("Evento_7","Descricao Evento_7", "01/10/2015 12:00", "01/10/2015 13:00");
+           eventBean.createEvent("Evento_8","Descricao Evento_8", "01/10/2015 16:00", "01/10/2015 17:00");
+           eventBean.createEvent("Evento_9","Descricao Evento_9", "01/10/2015 12:00", "01/10/2015 13:00");
+           eventBean.createEvent("Evento_10","Descricao Evento_10", "01/10/2015 18:00", "01/10/2015 19:00");
+           eventBean.createEvent("Evento_11","Descricao Evento_11", "01/10/2015 20:00", "01/10/2015 23:00");
+           eventBean.createEvent("Evento_12","Descricao Evento_12", "01/11/2015 14:00", "01/11/2015 18:00");
            
            categoryBean.createCategory("Categoria_1");
            categoryBean.createCategory("Categoria_2");
@@ -71,6 +71,14 @@ public class ConfigBean {
            categoryBean.createCategory("Categoria_6");
            categoryBean.createCategory("Categoria_7");
            
+          /*  eventBean.enrollEventtInCategory(Long.parseLong("1"),Long.parseLong("1"));
+           eventBean.enrollEventtInCategory(Long.parseLong("2"),Long.parseLong("2"));
+           eventBean.enrollEventtInCategory(Long.parseLong("3"),Long.parseLong("1"));
+           eventBean.enrollEventtInCategory(Long.parseLong("4"),Long.parseLong("1"));
+        
+          */ 
+           
+            
          
             
         } catch (Exception e) {

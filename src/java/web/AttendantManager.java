@@ -58,6 +58,9 @@ public class AttendantManager {
     private String atEmail;   
     private String atUserName;
     private String atPassword;
+    private String atPasswordConfirm;
+
+   
     
     //Event
     private Long evId;
@@ -330,6 +333,14 @@ public class AttendantManager {
     public void setEvDescription(String evDescription) {
         this.evDescription = evDescription;
     }
+     public String getAtPasswordConfirm() {
+        return atPasswordConfirm;
+    }
+
+    public void setAtPasswordConfirm(String atPasswordConfirm) {
+        this.atPasswordConfirm = atPasswordConfirm;
+    }
+    
 
     public String createAdministrator(){
         try {
@@ -431,11 +442,16 @@ public class AttendantManager {
     
     public String createAttendant(){
         try {
+            if(atPassword.equals(atPasswordConfirm)){
             attendantBean.createAttendant(atName, atEmail, atUserName, atPassword);
             clearNewAttendant();
             //escolher acção
             //return (String) "index?faces-redirect=true";
-            return (String) "Vai para criação de Attendant";
+            return "administrator_panel?faces-redirect=true";
+            
+            }
+            
+            return "administrator_create?faces-redirect=true";
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }  

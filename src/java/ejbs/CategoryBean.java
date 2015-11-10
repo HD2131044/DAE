@@ -35,7 +35,7 @@ public class CategoryBean {
             throw new EJBException(ex.getMessage());
         }
     }
-     
+  
     public void updateCategory(Long id, String name) {
         try {
             Category cUpdate = em.find(Category.class, id);
@@ -43,10 +43,13 @@ public class CategoryBean {
                 return;
             }
             cUpdate.setName(name);
+            em.merge(cUpdate);
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
     }
+    
+      
 
     public void removeCategory (Long id) {
         try {
