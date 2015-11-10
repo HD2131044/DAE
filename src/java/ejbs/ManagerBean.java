@@ -116,6 +116,7 @@ public class ManagerBean {
         for (Manager c : managers) {
             dtos.add(new ManagerDTO(c.getId(), c.getName(), c.getEmail(), c.getPassword(), c.getUserName()));            
         }
-        return dtos;    }
+        return dtos;
+    }
     
 }

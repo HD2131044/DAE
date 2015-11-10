@@ -87,5 +87,4 @@ public class EventBean {
             throw new EJBException(ex.getMessage());
         }
     }
-    
 }

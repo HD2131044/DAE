@@ -27,6 +27,92 @@ public class ManagerManager {
     @EJB
     private ManagerBean managerBean;
     
+    private ManagerDTO newManager;
+    private ManagerDTO currentManager;
+
+    public ManagerManager() {
+        newManager = new ManagerDTO();
+    }
+    
+    public List<ManagerDTO> getAllManagers(){
+        try {
+            return managerBean.getAllManagers();
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());       
+        }
+    }
+    
+    public String createManager(){
+        try {
+            managerBean.createManager(
+                    newManager.getName(), 
+                    newManager.getEmail(), 
+                    newManager.getUsername(), 
+                    newManager.getPassword());
+            newManager.reset();
+            //escolher acção
+            return "index?faces-redirect=true";
+            //return (String) "Vai para criação de Manager";
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());
+        }  
+    }
+
+    public String updateManager(){
+        try {
+            managerBean.updateManager(
+                    currentManager.getId(),
+                    currentManager.getName(),
+                    currentManager.getUsername(), 
+                    currentManager.getPassword(),
+                    currentManager.getEmail());
+            //escolher acção
+            //return (String) "index?faces-redirect=true";
+            return (String) "Faz update a Manager";
+        } catch (NumberFormatException ex) {
+            throw new EJBException(ex.getMessage()); 
+        }
+    }
+    
+    public void removeManager(ActionEvent event){
+        try {
+            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteUserId");
+            Long id = (Long) param.getValue();
+            managerBean.removeManager(id);
+        } catch (NumberFormatException ex) {
+            throw new EJBException(ex.getMessage()); 
+        }
+    }
+    
+    public List<Event> getAllEventsOfCurrentManager(){
+        try {
+            return managerBean.getAllEventsOfManager(currentManager.getId());
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());       
+        }
+    }
+    
+    // - G&S - /////////////////////////////////////////////////////////////////////    
+
+    public ManagerDTO getNewManager() {
+        return newManager;
+    }
+    
+    public ManagerDTO getCurrentManager() {
+        return currentManager;
+    }
+    
+    public void setNewManager(ManagerDTO newManager) {
+        this.newManager = newManager;
+    }
+
+    public void setCurrentManager(ManagerDTO currentManager) {
+        this.currentManager = currentManager;
+    }
+    
+    
+    
+    /*
     //Manager
     private Long manId;
     private String manName;
@@ -41,13 +127,13 @@ public class ManagerManager {
     
     private ManagerDTO currentManager;
 
-    /**
-     * Creates a new instance of ManagerManager
-     */
+    
     public ManagerManager() {
     
     }
-    /*
+    
+    
+    
     public List<Manager> getAllManagers(){
         try {
             this.managersM = managerBean.getAllManagers();
@@ -56,7 +142,7 @@ public class ManagerManager {
             throw new EJBException(ex.getMessage());       
         }
     }
-    */
+    
     public String createManager(){
         try {if(manPassword.equals(manPasswordConfirm)){
             managerBean.createManager(manName, manEmail, manUserName, manPassword);
@@ -110,6 +196,7 @@ public class ManagerManager {
         }
     }
     */
+    /*
      public Long getManId() {
         return manId;
     }
@@ -173,29 +260,5 @@ public class ManagerManager {
     public void setManPasswordConfirm(String manPasswordConfirm) {
         this.manPasswordConfirm = manPasswordConfirm;
     }
-    
-    public List<ManagerDTO> getAllManagers(){
-        try {
-            return managerBean.getAllManagers();
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    }
-    
-    
-    public List<Event> getAllEventsOfCurrentManager(){
-        try {
-            return managerBean.getAllEventsOfManager(currentManager.getId());
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    }
-    
-    public ManagerDTO getCurrentManager() {
-        return currentManager;
-    }
-    
-    public void setCurrentManager(ManagerDTO currentManager) {
-        this.currentManager = currentManager;
-    }
+    */
 }

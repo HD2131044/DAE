@@ -5,6 +5,8 @@
  */
 package ejbs;
 
+import entities.Event;
+import entities.Manager;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -29,9 +31,7 @@ public class ConfigBean {
     @PostConstruct
     public void populateDB() {
         try {
-            
-            
-            
+  
             administratorBean.createAdministrator("Administrator_Name_01", "administrator_email_01@email.com", "Administrator_username_01", "12345678");
             administratorBean.createAdministrator("Administrator_Name_02", "administrator_email_02@email.com", "Administrator_username_02", "12345678");
             administratorBean.createAdministrator("Administrator_Name_03", "administrator_email_03@email.com", "Administrator_username_03", "12345678");
@@ -71,7 +71,9 @@ public class ConfigBean {
            categoryBean.createCategory("Categoria_6");
            categoryBean.createCategory("Categoria_7");
            
-         
+           Long managerID = Long.parseLong("5");
+           Long eventID = Long.parseLong("18");
+           managerBean.enrollManagerInEvent(managerID, eventID);
             
         } catch (Exception e) {
             System.out.println(e.getMessage());
