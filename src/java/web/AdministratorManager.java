@@ -334,6 +334,7 @@ public class AdministratorManager {
         }  
     }
     
+    /*
     public List<Attendant> getAllAttendats(){
         try {
             this.attendantsM = attendantBean.getAllAttendants();
@@ -342,7 +343,9 @@ public class AdministratorManager {
             throw new EJBException(ex.getMessage());       
         }
     }
+    */
     
+    /*
     public String updateAttendat(){
         try {
             attendantBean.updateAttendant(atId, atName, atEmail, atUserName, atPassword);
@@ -353,7 +356,9 @@ public class AdministratorManager {
             throw new EJBException(ex.getMessage()); 
         }
     }
+    */
 
+    /*
     public void removeAttendant(ActionEvent event){
         try {
             UIParameter param = (UIParameter) event.getComponent().findComponent("deleteAttendantId");
@@ -363,6 +368,7 @@ public class AdministratorManager {
             throw new EJBException(ex.getMessage()); 
         }
     }
+    */
    
     private void clearNewAttendant() {
         atName = null;
@@ -465,6 +471,7 @@ public class AdministratorManager {
         catName = null;
     }
     
+    /*
     public List<Event> getAllEventsOfCurrentAttendant(Attendant currentAttendant) {
         try {
             this.eventsM = attendantBean.getAllEventsOfAttendant(currentAttendant);
@@ -473,7 +480,9 @@ public class AdministratorManager {
             throw new EJBException(ex.getMessage());
         }
     }
+    */
     
+    /*
     public List<Category> getAllCategoriesOfCurrentAttendant(Attendant currentAttendant) {
         try {
             this.categoriesM = attendantBean.getAllCategoriesOfAttendant(currentAttendant);
@@ -482,6 +491,7 @@ public class AdministratorManager {
             throw new EJBException(ex.getMessage());
         }
     }
+    /*
     
     public List<Category> getAllCategoriesOfCurrentEvent(Event currentEvent) {
         try {
@@ -491,5 +501,6 @@ public class AdministratorManager {
             throw new EJBException(ex.getMessage());
         }
     }
+    */
 
 }
