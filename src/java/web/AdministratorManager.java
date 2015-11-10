@@ -47,7 +47,8 @@ public class AdministratorManager {
     private String adminEmail;   
     private String adminUserName;
     private String adminPassword;
-    
+    private String adminPasswordConfirm;
+
     
     
     //Attendant
@@ -272,14 +273,29 @@ public class AdministratorManager {
         this.evDescription = evDescription;
     }
     
+    
+    public String getAdminPasswordConfirm() {
+        return adminPasswordConfirm;
+    }
+
+    public void setAdminPasswordConfirm(String adminPasswordConfirm) {
+        this.adminPasswordConfirm = adminPasswordConfirm;
+    }
+    
+    
    
     public String createAdministrator(){
         try {
+            if(adminPassword.equals(adminPasswordConfirm)){
             administratorBean.createAdministrator(adminName, adminEmail, adminUserName, adminPassword);
             clearNewAdministrator();
             //escolher acção
             //return (String) "index?faces-redirect=true";
-            return (String) "Vai para criação de Administrador";
+            return "administrator_panel?faces-redirect=true";
+            
+            }
+            
+            return "administrator_create?faces-redirect=true";
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }  

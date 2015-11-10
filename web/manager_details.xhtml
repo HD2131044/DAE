@@ -8,7 +8,7 @@
     </h:head>
     <h:body>
         <h:panelGrid columns="2">
-
+            
             <h:outputLabel for="username" value="Name: " />
             <h:outputText 
                 id="username"
@@ -38,7 +38,7 @@
             <f:facet name="header">
                 <h:outputText value="Student's Subjects" />
             </f:facet>
-
+                 
                 <h:column>
                     <f:facet name="header">
                         <h:outputText value="Name" />
@@ -59,7 +59,22 @@
                         <h:outputText value="Category" />
                     </f:facet>
                     <h:outputText value="#{event.categories}" />
-                </h:column>                        
+                </h:column>
+                
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="State" />
+                    </f:facet>
+                    <h:outputText value="#{event.openForEnrollment}" />
+                </h:column>
+            
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Category" />
+                    </f:facet>
+                    <h:outputText value="#{event.startDate}" />
+                </h:column>
+            
 
         </h:dataTable>
 

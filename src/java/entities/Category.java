@@ -101,7 +101,7 @@ public class Category implements Serializable {
     public void addEvent(Event event){
         try {
             if (!events.contains(event)){
-                events.add(event);
+                this.events.add(event);
             }
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
@@ -111,7 +111,7 @@ public class Category implements Serializable {
     public void removeEvent(Event event){
         try {
             if (events.contains(event)){
-                events.remove(event);
+                this.events.remove(event);
             }
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());

@@ -9,15 +9,17 @@ import ejbs.AdministratorBean;
 import ejbs.AttendantBean;
 import ejbs.CategoryBean;
 import ejbs.EventBean;
+import ejbs.ManagerBean;
 import entities.Administrator;
 import entities.Attendant;
 import entities.Category;
 import entities.Event;
+import entities.Manager;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 
@@ -25,17 +27,12 @@ import javax.faces.event.ActionEvent;
 
 
 @ManagedBean
-@RequestScoped
-public class EventManager { 
-  
-      
+@SessionScoped
+public class CategoryManager { 
+     
     @EJB
     private AdministratorBean administratorBean;
-    
-    @EJB
-    private AttendantBean attendantBean;
-    @EJB
-    private EventBean eventBean;
+   
     @EJB
     private CategoryBean categoryBean;
     
@@ -48,15 +45,8 @@ public class EventManager {
     private String adminPassword;
     
     
-    
-    //Attendant
-    private Long atId;
-    private String atName;
-    private String atEmail;   
-    private String atUserName;
-    private String atPassword;
-    
-    //Event
+ 
+      //Event
     private Long evId;
     private String evName;
     private String evDescription;
@@ -75,20 +65,10 @@ public class EventManager {
     private Attendant currentAttendantM;
     private Event currentEventM;
     private Administrator currentAdministratorM;
-    
-    private Event currentEvent;
+    private Category currentCategoryM;
 
-    public EventManager() {
+    public CategoryManager() {
     }
-    
-    public Event getCurrentEvent() {
-        return currentEvent;
-    }
-
-    public void setCurrentEvent(Event currentEvent) {
-        this.currentEvent = currentEvent;
-    }
-
    
     public Long getAdminId() {
         return adminId;
@@ -130,45 +110,7 @@ public class EventManager {
         this.adminPassword = adminPassword;
     }
 
-    public Long getAtId() {
-        return atId;
-    }
-
-    public void setAtId(Long atId) {
-        this.atId = atId;
-    }
-
-    public String getAtName() {
-        return atName;
-    }
-
-    public void setAtName(String atName) {
-        this.atName = atName;
-    }
-
-    public String getAtEmail() {
-        return atEmail;
-    }
-
-    public void setAtEmail(String atEmail) {
-        this.atEmail = atEmail;
-    }
-
-    public String getAtUserName() {
-        return atUserName;
-    }
-
-    public void setAtUserName(String atUserName) {
-        this.atUserName = atUserName;
-    }
-
-    public String getAtPassword() {
-        return atPassword;
-    }
-
-    public void setAtPassword(String atPassword) {
-        this.atPassword = atPassword;
-    }
+   
 
     public Long getEvId() {
         return evId;
@@ -268,9 +210,15 @@ public class EventManager {
     public Administrator getCurrentAdministratorM() {
         return currentAdministratorM;
     }
+    public Category getCurrentCategoryM() {
+        return currentCategoryM;
+    }
 
     public void setCurrentAdministratorM(Administrator currentAdministratorM) {
         this.currentAdministratorM = currentAdministratorM;
+    }
+    public void setCurrentCategoryM(Category currentCategoryM) {
+        this.currentCategoryM = currentCategoryM;
     }
 
     
@@ -281,96 +229,111 @@ public class EventManager {
     public void setEvDescription(String evDescription) {
         this.evDescription = evDescription;
     }
-   
     
-    public String createEvent(){
+   
+    public String createAdministrator(){
         try {
-            if(evStartDate.matches("^(?=\\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29"
-           + "(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]"
-           + "|[3579][26])00)))(?:\\x20|$))|(?:2[0-8]|1\\d|0?[1-9]))([-./])(?:1[012]|0?[1-9])\\1"
-           + "(?:1[6-9]|[2-9]\\d)?\\d\\d(?:(?=\\x20\\d)\\x20|$))(|([01]\\d|2[0-3])(:[0-5]\\d){1,2})?$")&&
-                    evFinishDate.matches("^(?=\\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29"
-           + "(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]"
-           + "|[3579][26])00)))(?:\\x20|$))|(?:2[0-8]|1\\d|0?[1-9]))([-./])(?:1[012]|0?[1-9])\\1"
-           + "(?:1[6-9]|[2-9]\\d)?\\d\\d(?:(?=\\x20\\d)\\x20|$))(|([01]\\d|2[0-3])(:[0-5]\\d){1,2})?$"))
-            {
-            eventBean.createEvent(evName,evDescription, evStartDate, evFinishDate);
-            clearNewEvent();
+            administratorBean.createAdministrator(adminName, adminEmail, adminUserName, adminPassword);
+            clearNewAdministrator();
             //escolher acção
             //return (String) "index?faces-redirect=true";
-            return  "administrator_panel?faces-redirect=true" ;
-            }
-            return "event_create?faces-redirect=true";
+            return (String) "Vai para criação de Administrador";
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }  
     }
     
-    public List<Event> getAllEvents(){
+    public List<Administrator> getAllAdministrators(){
         try {
-            this.eventsM = eventBean.getAllEvents();
-            return eventsM; 
+            this.administratorsM = administratorBean.getAllAdministrators();
+            return administratorsM; 
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());       
+        }
+    } 
+    
+    public String updateAdministrator(){
+        try {
+            administratorBean.updateAdministrator(adminId, adminName, adminEmail, adminUserName, adminPassword);
+            //escolher acção
+            //return (String) "index?faces-redirect=true";
+            return (String) "Faz update a Administrador";
+        } catch (NumberFormatException ex) {
+            throw new EJBException(ex.getMessage()); 
+        }
+    }
+
+    public void removeAdministrator(ActionEvent event){
+        try {
+            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteAdministratorId");
+            Long id = (Long) param.getValue();
+            administratorBean.removeAdministrator(id);
+        } catch (NumberFormatException ex) {
+            throw new EJBException(ex.getMessage()); 
+        }
+    }
+   
+    private void clearNewAdministrator() {
+        adminName = null;
+        adminEmail = null;
+        adminUserName = null;
+        adminPassword = null;
+    }
+    
+  
+   
+
+   
+   
+    
+    public String createCategory(){
+        try {
+            categoryBean.createCategory(catName);
+            clearNewCategory();
+            //escolher acção
+            //return (String) "index?faces-redirect=true";
+            return "administrator_panel?faces-redirect=true";
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());
+        }  
+    }
+    
+    public List<Category> getAllCategories(){
+        try {
+            this.categoriesM = categoryBean.getAllCategories();
+            return categoriesM; 
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());       
         }
     }
     
-    public String updateEvent(){
+     
+    
+    
+    public String updateCategory(){
         try {
-            eventBean.updateEvent(evId, evName, evStartDate, evFinishDate);
+            categoryBean.updateCategory(currentCategoryM.getId(),currentCategoryM.getName());
             //escolher acção
             //return (String) "index?faces-redirect=true";
-            return (String) "Faz update a Event";
+             return "category_lists?faces-redirect=true";
         } catch (NumberFormatException ex) {
             throw new EJBException(ex.getMessage()); 
         }
     }
 
-    public void removeEvent(ActionEvent event){
+     
+    public void removeCategory(ActionEvent event){
         try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteEventId");
+            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteCategoryId");
             Long id = (Long) param.getValue();
-            eventBean.removeEvent(id);
+            categoryBean.removeCategory(id);
         } catch (NumberFormatException ex) {
             throw new EJBException(ex.getMessage()); 
         }
     }
    
-    private void clearNewEvent() {
-        evName = null;
-        evStartDate = null;
-        evFinishDate = null;
+    private void clearNewCategory() {
+        catName = null;
     }
    
-    /*
-    public List<Event> getAllEventsOfCurrentAttendant(Attendant currentAttendant) {
-        try {
-            this.eventsM = attendantBean.getAllEventsOfAttendant(currentAttendant);
-            return eventsM;  
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }
-    }
-    */
-    
-    /*
-    public List<Category> getAllCategoriesOfCurrentAttendant(Attendant currentAttendant) {
-        try {
-            this.categoriesM = attendantBean.getAllCategoriesOfAttendant(currentAttendant);
-            return categoriesM;   
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }
-    }
-    */
-    
-    public List<Category> getAllCategoriesOfCurrentEvent(Event currentEvent) {
-        try {
-            this.categoriesM = eventBean.getAllCategoriesOfEvent(currentEvent);
-            return categoriesM;  
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }
-    }
-
 }

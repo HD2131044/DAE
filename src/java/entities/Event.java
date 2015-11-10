@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 
 
@@ -46,10 +47,20 @@ public class Event implements Serializable {
     private List<Category> categories;
    
     @NotNull
+   @Pattern(regexp="^(?=\\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29"
+           + "(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]"
+           + "|[3579][26])00)))(?:\\x20|$))|(?:2[0-8]|1\\d|0?[1-9]))([-./])(?:1[012]|0?[1-9])\\1"
+           + "(?:1[6-9]|[2-9]\\d)?\\d\\d(?:(?=\\x20\\d)\\x20|$))(|([01]\\d|2[0-3])(:[0-5]\\d){1,2})?$",
+            message="{Not Valid date or hour}")
     private String startDate;
     
     @NotNull
-    private String finishDate;
+    @Pattern(regexp="^(?=\\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29"
+           + "(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]"
+           + "|[3579][26])00)))(?:\\x20|$))|(?:2[0-8]|1\\d|0?[1-9]))([-./])(?:1[012]|0?[1-9])\\1"
+           + "(?:1[6-9]|[2-9]\\d)?\\d\\d(?:(?=\\x20\\d)\\x20|$))(|([01]\\d|2[0-3])(:[0-5]\\d){1,2})?$",
+            message="{Not Valid date or hour}")
+        private String finishDate;
     
     @ManyToMany
     @JoinTable(name = "EVENTS_MANAGERS",
@@ -66,11 +77,15 @@ public class Event implements Serializable {
             inverseJoinColumns
             = @JoinColumn(name = "ATTENDANTS_ID", referencedColumnName = "ID"))
     private List<Attendant> attendants;
+    
+    private boolean OpenForEnrollment;
       
     public Event() {
         this.categories = new LinkedList<>();
         this.managers = new LinkedList<>();
         this.attendants = new LinkedList<>();
+        
+        OpenForEnrollment = false;
     }
 
     public Event(String name,String description ,String startDate, String finishDate) {
@@ -81,6 +96,16 @@ public class Event implements Serializable {
         this.categories = new LinkedList<>();
         this.managers = new LinkedList<>();
         this.attendants = new LinkedList<>();
+        
+        OpenForEnrollment = false;
+    }
+
+    public boolean isOpenForEnrollment() {
+        return OpenForEnrollment;
+    }
+
+    public void setOpenForEnrollment(boolean OpenForEnrollment) {
+        this.OpenForEnrollment = OpenForEnrollment;
     }
 
     public Long getId() {
@@ -150,7 +175,7 @@ public class Event implements Serializable {
     public void addCategory(Category category){
         try {
             if (!categories.contains(category)){
-                categories.add(category);
+                this.categories.add(category);
             }
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
@@ -160,7 +185,7 @@ public class Event implements Serializable {
     public void removeCategory(Category category){
         try {
             if (categories.contains(category)){
-                categories.remove(category);
+                this.categories.remove(category);
             }
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
