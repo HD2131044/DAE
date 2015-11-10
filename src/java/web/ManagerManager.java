@@ -27,6 +27,7 @@ public class ManagerManager {
     @EJB
     private ManagerBean managerBean;
     
+    /*
     private ManagerDTO newManager;
     private ManagerDTO currentManager;
 
@@ -110,9 +111,9 @@ public class ManagerManager {
         this.currentManager = currentManager;
     }
     
+    */
     
     
-    /*
     //Manager
     private Long manId;
     private String manName;
@@ -126,14 +127,29 @@ public class ManagerManager {
     private List<Event> eventsM;
     
     private ManagerDTO currentManager;
+    private ManagerDTO newManager;
 
     
     public ManagerManager() {
     
     }
     
+    public List<ManagerDTO> getAllManagers(){
+        try {
+            return managerBean.getAllManagers();
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());       
+        }
+    }
     
-    
+    public List<Event> getAllEventsOfCurrentManager(){
+        try {
+            return managerBean.getAllEventsOfManager(currentManager.getId());
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());       
+        }
+    }
+    /*
     public List<Manager> getAllManagers(){
         try {
             this.managersM = managerBean.getAllManagers();
@@ -142,6 +158,7 @@ public class ManagerManager {
             throw new EJBException(ex.getMessage());       
         }
     }
+    */
     
     public String createManager(){
         try {if(manPassword.equals(manPasswordConfirm)){
@@ -196,7 +213,24 @@ public class ManagerManager {
         }
     }
     */
-    /*
+    
+    public ManagerDTO getNewManager() {
+        return newManager;
+    }
+    
+    public ManagerDTO getCurrentManager() {
+        return currentManager;
+    }
+    
+    public void setNewManager(ManagerDTO newManager) {
+        this.newManager = newManager;
+    }
+
+    public void setCurrentManager(ManagerDTO currentManager) {
+        this.currentManager = currentManager;
+    }
+    
+    
      public Long getManId() {
         return manId;
     }
@@ -260,5 +294,5 @@ public class ManagerManager {
     public void setManPasswordConfirm(String manPasswordConfirm) {
         this.manPasswordConfirm = manPasswordConfirm;
     }
-    */
+    
 }
