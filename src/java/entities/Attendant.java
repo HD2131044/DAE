@@ -42,12 +42,12 @@ public class Attendant extends User implements Serializable {
         this.categories = new LinkedList<>();
     }
     
-    public Attendant(String name, String email, String userName, String password) {
-        super(name, email, userName, password);
+    public Attendant(String username, String password, String name, String email) {
+        super(username, password, name, email);
         this.events = new LinkedList<>();
         this.categories = new LinkedList<>();
     }
-
+    
     public List<Event> getEvents() {
         return events;
     }

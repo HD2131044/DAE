@@ -30,25 +30,23 @@ public class ConfigBean {
     public void populateDB() {
         try {
             
+            administratorBean.createAdministrator("Administrator_username_01", "12345678", "Administrator_Name_01", "administrator_email_01@email.com");
+            administratorBean.createAdministrator("Administrator_username_02", "12345678", "Administrator_Name_02", "administrator_email_02@email.com");
+            administratorBean.createAdministrator("Administrator_username_03", "12345678", "Administrator_Name_03", "administrator_email_03@email.com");
+            administratorBean.createAdministrator("Administrator_username_04", "12345678", "Administrator_Name_04", "administrator_email_04@email.com");
             
+            managerBean.createManager("Manager_username_01", "12345678", "Manager_Name_01", "manager_email_01@email.com");
+            managerBean.createManager("Manager_username_02", "12345678", "Manager_Name_02", "manager_email_02@email.com");
             
-            administratorBean.createAdministrator("Administrator_Name_01", "administrator_email_01@email.com", "Administrator_username_01", "12345678");
-            administratorBean.createAdministrator("Administrator_Name_02", "administrator_email_02@email.com", "Administrator_username_02", "12345678");
-            administratorBean.createAdministrator("Administrator_Name_03", "administrator_email_03@email.com", "Administrator_username_03", "12345678");
-            administratorBean.createAdministrator("Administrator_Name_04", "administrator_email_04@email.com", "Administrator_username_04", "12345678");
-            
-            managerBean.createManager("Manager_Name_01", "manager_email_01@email.com", "Manager_username_01", "12345678");
-            managerBean.createManager("Manager_Name_02", "manager_email_02@email.com", "Manager_username_02", "12345678");
-            
-            attendantBean.createAttendant("Attendant_Name_01", "attendant_email_01@email.com", "Attendant_username_01", "12345678");
-            attendantBean.createAttendant("Attendant_Name_02", "attendant_email_02@email.com", "Attendant_username_02", "12345678");
-            attendantBean.createAttendant("Attendant_Name_03", "attendant_email_03@email.com", "Attendant_username_03", "12345678");
-            attendantBean.createAttendant("Attendant_Name_04", "attendant_email_04@email.com", "Attendant_username_04", "12345678");
-            attendantBean.createAttendant("Attendant_Name_05", "attendant_email_05@email.com", "Attendant_username_05", "12345678");
-            attendantBean.createAttendant("Attendant_Name_06", "attendant_email_06@email.com", "Attendant_username_06", "12345678");
-            attendantBean.createAttendant("Attendant_Name_07", "attendant_email_07@email.com", "Attendant_username_07", "12345678");
-            attendantBean.createAttendant("Attendant_Name_08", "attendant_email_08@email.com", "Attendant_username_08", "12345678");
-            attendantBean.createAttendant("Attendant_Name_09", "attendant_email_09@email.com", "Attendant_username_09", "12345678");
+            attendantBean.createAttendant("Attendant_username_01", "12345678", "Attendant_Name_01", "attendant_email_01@email.com");
+            attendantBean.createAttendant("Attendant_username_02", "12345678", "Attendant_Name_02", "attendant_email_02@email.com");
+            attendantBean.createAttendant("Attendant_username_03", "12345678", "Attendant_Name_03", "attendant_email_03@email.com");
+            attendantBean.createAttendant("Attendant_username_04", "12345678", "Attendant_Name_04", "attendant_email_04@email.com");
+            attendantBean.createAttendant("Attendant_username_05", "12345678", "Attendant_Name_05", "attendant_email_05@email.com");
+            attendantBean.createAttendant("Attendant_username_06", "12345678", "Attendant_Name_06", "attendant_email_06@email.com");
+            attendantBean.createAttendant("Attendant_username_07", "12345678", "Attendant_Name_07", "attendant_email_07@email.com");
+            attendantBean.createAttendant("Attendant_username_08", "12345678", "Attendant_Name_08", "attendant_email_08@email.com");
+            attendantBean.createAttendant("Attendant_username_09", "12345678", "Attendant_Name_09", "attendant_email_09@email.com");
 
            eventBean.createEvent("Evento_1","Descricao Evento_1", "12:00 01-10-2015", "13:00 01-10-2015");
            eventBean.createEvent("Evento_2","Descricao Evento_2", "12:00 08-10-2015", "13:00 08-10-2015");
@@ -71,8 +69,10 @@ public class ConfigBean {
            categoryBean.createCategory("Categoria_6");
            categoryBean.createCategory("Categoria_7");
            
-         
-            
+           Long managerID = Long.parseLong("5");
+           Long eventID = Long.parseLong("18");
+           managerBean.enrollManagerInEvent(managerID, eventID);
+     
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

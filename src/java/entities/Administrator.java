@@ -52,8 +52,8 @@ public class Administrator extends User implements Serializable {
         //this.events = new LinkedList<>();
     }
 
-    public Administrator(String name, String email, String userName, String password) {
-        super(name, email, userName, password);
+    public Administrator(String username, String password, String name, String email) {
+        super(username, password, name, email);
         //this.users = new LinkedList<>();
         //this.events = new LinkedList<>();
     }

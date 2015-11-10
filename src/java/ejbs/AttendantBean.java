@@ -1,18 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ejbs;
 
+import dtos.AttendantDTO;
 import entities.Category;
 import entities.Event;
 import entities.Attendant;
+import exceptions.AttendantEnrolledException;
+import exceptions.AttendantNotEnrolledException;
+import exceptions.EntityAlreadyExistsException;
+import exceptions.EntityDoesNotExistsException;
+import exceptions.MyConstraintViolationException;
+import exceptions.Utils;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolationException;
 
 @Stateless
 public class AttendantBean {
@@ -20,99 +26,278 @@ public class AttendantBean {
     @PersistenceContext
     private EntityManager em;
     
-    public void createAttendant (String name, String email, String userName, String password){
+    public void createAttendant (String username, String password, String name, String email) throws EntityAlreadyExistsException, EntityDoesNotExistsException, MyConstraintViolationException {
         try {
-            Attendant p = new Attendant (name, email, userName, password);
-            em.persist(p);
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
+            if (em.find(Attendant.class, username) != null) {
+                throw new EntityAlreadyExistsException("A student with that username already exists.");
+            }
+            /*
+            dar um event ao attendant
+            */
+            Attendant attendant = new Attendant (username, password, name, email);
+            em.persist(attendant);
+        } catch (EntityAlreadyExistsException e) {
+            throw e;
+        } catch (ConstraintViolationException e) {
+            throw new MyConstraintViolationException(Utils.getConstraintViolationMessages(e));
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
         }
     }
     
-    public List<Attendant> getAllAttendants() {
+    public List<AttendantDTO> getAllAttendants() {
         try {
             List<Attendant> attendants = (List<Attendant>) em.createNamedQuery("getAllAttendants").getResultList();
-            return attendants;
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }
-    }
- 
-     public void updateAttendant (Long id, String name, String email, String userName, String password){
-        try {
-            Attendant pUpdate = em.find(Attendant.class, id);
-            if (pUpdate == null){
-                return;
-            }
-            pUpdate.setName(name);
-            pUpdate.setEmail(email);
-            pUpdate.setUserName(userName);
-            pUpdate.setPassword(password);
-            em.merge(pUpdate);   
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }
-     }
-     
-     public void removeAttendant(Long id){
-        try {
-            Attendant pRemove = em.find(Attendant.class, id);
-            if (pRemove == null){
-                return;
-            }
-            em.remove(pRemove);
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        } 
-     }
-     
-    public void enrollAttendantInEvent(Long idAttendant, Long idEvent){
-        try {
-            Attendant a = em.find(Attendant.class, idAttendant);
-            Event e = em.find(Event.class, idEvent);
-        
-            e.addAttendant(a);
-            a.addEvent(e);
-        
-            em.merge(e);
-            em.merge(a);
-  
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }
-     }
-
-    public List<Event> getAllEventsOfAttendant(Attendant currentAttendant) {
-        try {
-            List<Event> events = currentAttendant.getEvents();
-            return events; 
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
+            return attendantsToDTOs(attendants);
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
         }
     }
     
-    public void enrollAttendantInCategory(Long idAttendant, Long idCategory){
+    public Attendant getAttendant(String username) {
         try {
-            Attendant a = em.find(Attendant.class, idAttendant);
-            Category c = em.find(Category.class, idCategory);
-        
-            c.addAttendant(a);
-            a.addCategory(c);
-        
-            em.merge(c);
-            em.merge(a);
-  
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }
-     }
-
-    public List<Category> getAllCategoriesOfAttendant(Attendant currentAttendant) {
-        try {
-            List<Category> categories = currentAttendant.getCategories();
-            return categories; 
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
+            Attendant attendant = em.find(Attendant.class, username);
+            return attendant;
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
         }
     }
+
+    public void updateAttendant (Long id, String username, String password, String name, String email)throws EntityDoesNotExistsException, MyConstraintViolationException{
+         try {
+            Attendant attendant = em.find(Attendant.class, username);
+            if (attendant == null){
+                throw new EntityDoesNotExistsException("There is no attendant with that username.");
+            }
+            attendant.setUsername(username);
+            attendant.setPassword(password);
+            attendant.setName(name);
+            attendant.setEmail(email);
+            em.merge(attendant);   
+        } catch (EntityDoesNotExistsException e) {
+            throw e;
+        } catch (ConstraintViolationException e) {
+            throw new MyConstraintViolationException(Utils.getConstraintViolationMessages(e));            
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
+    public void removeAttendant(String username) throws EntityDoesNotExistsException {
+        try {
+            Attendant attendant = em.find(Attendant.class, username);
+            if (attendant == null) {
+                throw new EntityDoesNotExistsException("There is no attendant with that username.");
+            }
+
+            for (Event event : attendant.getEvents()) {
+                event.removeAttendant(attendant);
+            }
+            
+            for (Category category : attendant.getCategories()){
+                category.removeAttendant(attendant);
+            }
+            
+            em.remove(attendant);
+        
+        } catch (EntityDoesNotExistsException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
+    public void enrollAttendantIntoEvent(String username, String eventName) throws EntityDoesNotExistsException, AttendantEnrolledException{
+        try {
+            Attendant attendant = em.find(Attendant.class, username);
+            if (attendant == null) {
+                throw new EntityDoesNotExistsException("There is no attendant with that username.");
+            }
+
+            Event event = em.find(Event.class, eventName);
+            if (event == null) {
+                throw new EntityDoesNotExistsException("There is no event with that name.");
+            }
+
+            if (event.getAttendants().contains(attendant)) {
+                throw new AttendantEnrolledException("Attendant is already enrolled in that event.");
+            }
+
+            event.addAttendant(attendant); 
+            attendant.addEvent(event);
+
+        } catch (EntityDoesNotExistsException | AttendantEnrolledException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
+    public void unrollStudentFromEvent(String username, String eventName) throws EntityDoesNotExistsException, AttendantNotEnrolledException {
+        try {
+            Event event = em.find(Event.class, eventName);
+            if(event == null){
+                throw new EntityDoesNotExistsException("There is no event with that name.");
+            }            
+            
+            Attendant attendant = em.find(Attendant.class, username);
+            if(attendant == null){
+                throw new AttendantNotEnrolledException("There is no attendant with that username.");
+            }
+            
+            if(!event.getAttendants().contains(attendant)){
+                throw new AttendantNotEnrolledException();
+            }
+          
+            event.removeAttendant(attendant);
+            attendant.removeEvent(event);
+
+        } catch (EntityDoesNotExistsException | AttendantNotEnrolledException e) {
+            throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
+    public List<AttendantDTO> getEnrolledAttendantsInEvents(String eventName) throws EntityDoesNotExistsException{
+        try {
+            Event event = em.find(Event.class, eventName);
+            if( event == null){
+                throw new EntityDoesNotExistsException("There is no event with that name.");
+            }            
+            List<Attendant> attendants = (List<Attendant>) event.getAttendants();
+            return attendantsToDTOs(attendants);
+        } catch (EntityDoesNotExistsException e) {
+            throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+
+    public List<AttendantDTO> getUnrolledAttendantsFromEvents(String eventName) throws EntityDoesNotExistsException{
+        try {
+            Event event = em.find(Event.class, eventName);
+            if( event == null){
+                throw new EntityDoesNotExistsException("There is no event with that name.");
+            }            
+            //nao sei se este código está correcto??
+            List<Attendant> attendants = (List<Attendant>) em.createNamedQuery("getAllEventAttendants")
+                    .setParameter("eventCode", event.getId())
+                    .getResultList();
+            //-----------------------------------------------------------------------------------------
+            List<Attendant> enrolled = em.find(Event.class, eventName).getAttendants();
+            attendants.removeAll(enrolled);
+            return attendantsToDTOs(attendants);
+        } catch (EntityDoesNotExistsException e) {
+            throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+
+    public void enrollAttendantIntoCategory(String username, String categorytName) throws EntityDoesNotExistsException, AttendantEnrolledException{
+        try {
+            Attendant attendant = em.find(Attendant.class, username);
+            if (attendant == null) {
+                throw new EntityDoesNotExistsException("There is no attendant with that username.");
+            }
+
+            Category category = em.find(Category.class, categorytName);
+            if (category == null) {
+                throw new EntityDoesNotExistsException("There is no categoty with that name.");
+            }
+
+            if (category.getAttendants().contains(attendant)) {
+                throw new AttendantEnrolledException("Attendant is already enrolled in that category.");
+            }
+
+            category.addAttendant(attendant); 
+            attendant.addCategory(category);
+
+        } catch (EntityDoesNotExistsException | AttendantEnrolledException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
+    public void unrollStudentFromCategory(String username, String categoryName) throws EntityDoesNotExistsException, AttendantNotEnrolledException {
+        try {
+            Category category = em.find(Category.class, categoryName);
+            if(category == null){
+                throw new EntityDoesNotExistsException("There is no category with that name.");
+            }            
+            
+            Attendant attendant = em.find(Attendant.class, username);
+            if(attendant == null){
+                throw new AttendantNotEnrolledException("There is no attendant with that username.");
+            }
+            
+            if(!category.getAttendants().contains(attendant)){
+                throw new AttendantNotEnrolledException();
+            }
+          
+            category.removeAttendant(attendant);
+            attendant.removeCategory(category);
+
+        } catch (EntityDoesNotExistsException | AttendantNotEnrolledException e) {
+            throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
+    public List<AttendantDTO> getEnrolledAttendantsInCategories(String categoryName) throws EntityDoesNotExistsException{
+        try {
+            Category category = em.find(Category.class, categoryName);
+            if( category == null){
+                throw new EntityDoesNotExistsException("There is no category with that name.");
+            }            
+            List<Attendant> attendants = (List<Attendant>) category.getAttendants();
+            return attendantsToDTOs(attendants);
+        } catch (EntityDoesNotExistsException e) {
+            throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+
+    public List<AttendantDTO> getUnrolledAttendantsFromCategories(String categoryName) throws EntityDoesNotExistsException{
+        try {
+            Category category = em.find(Category.class, categoryName);
+            if( category == null){
+                throw new EntityDoesNotExistsException("There is no category with that name.");
+            }            
+            //nao sei se este código está correcto??
+            List<Attendant> attendants = (List<Attendant>) em.createNamedQuery("getAllCategoryAttendants")
+                    .setParameter("categoryCode", category.getId())
+                    .getResultList();
+            //-----------------------------------------------------------------------------------------
+            List<Attendant> enrolled = em.find(Category.class, categoryName).getAttendants();
+            attendants.removeAll(enrolled);
+            return attendantsToDTOs(attendants);
+        } catch (EntityDoesNotExistsException e) {
+            throw e;             
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+   
+    AttendantDTO attendantToDTO(Attendant attendant) {
+        return new AttendantDTO(
+                attendant.getId(),
+                attendant.getUserName(),
+                null,
+                attendant.getName(),
+                attendant.getEmail());
+    }
+
+    List<AttendantDTO> attendantsToDTOs(List<Attendant> attendants) {
+        List<AttendantDTO> dtos = new LinkedList<>();
+        for (Attendant a : attendants) {
+            dtos.add(attendantToDTO(a));
+        }
+        return dtos;
+    }
+   
 }

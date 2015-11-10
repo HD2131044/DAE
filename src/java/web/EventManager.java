@@ -320,7 +320,7 @@ public class EventManager {
         evFinishDate = null;
     }
    
-    
+    /*
     public List<Event> getAllEventsOfCurrentAttendant(Attendant currentAttendant) {
         try {
             this.eventsM = attendantBean.getAllEventsOfAttendant(currentAttendant);
@@ -329,7 +329,9 @@ public class EventManager {
             throw new EJBException(ex.getMessage());
         }
     }
+    */
     
+    /*
     public List<Category> getAllCategoriesOfCurrentAttendant(Attendant currentAttendant) {
         try {
             this.categoriesM = attendantBean.getAllCategoriesOfAttendant(currentAttendant);
@@ -338,6 +340,7 @@ public class EventManager {
             throw new EJBException(ex.getMessage());
         }
     }
+    */
     
     public List<Category> getAllCategoriesOfCurrentEvent(Event currentEvent) {
         try {

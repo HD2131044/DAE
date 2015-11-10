@@ -21,9 +21,9 @@ public class ManagerBean {
     @PersistenceContext
     private EntityManager em;
     
-    public void createManager (String name, String email, String userName, String password){
+    public void createManager (String username, String password, String name, String email){
         try {
-            Manager m = new Manager (name, email, userName, password);
+            Manager m = new Manager (username, password, name, email);
             em.persist(m);
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
@@ -39,16 +39,16 @@ public class ManagerBean {
         }
     }
     */
-     public void updateManager (Long id, String name, String email, String userName, String password){
+     public void updateManager (Long id, String username, String password, String name, String email){
         try {
             Manager mUpdate = em.find(Manager.class, id);
             if (mUpdate == null){
                 return;
             }
+            mUpdate.setUsername(username);
+            mUpdate.setPassword(password);
             mUpdate.setName(name);
             mUpdate.setEmail(email);
-            mUpdate.setUserName(userName);
-            mUpdate.setPassword(password);
             em.merge(mUpdate);   
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());

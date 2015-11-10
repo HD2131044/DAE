@@ -19,9 +19,9 @@ public class AdministratorBean {
     @PersistenceContext
     EntityManager em;
     
-    public void createAdministrator (String name, String email, String userName, String password){
+    public void createAdministrator (String username, String password, String name, String email){
         try {
-            Administrator admin = new Administrator (name, email, userName, password);
+            Administrator admin = new Administrator (username, password, name, email);
             em.persist(admin);
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
@@ -37,16 +37,16 @@ public class AdministratorBean {
         }
     }
  
-     public void updateAdministrator (Long id, String name, String email, String userName, String password){
+     public void updateAdministrator (Long id, String username, String password, String name, String email){
         try {
             Administrator admUpdate = em.find(Administrator.class, id);
             if (admUpdate == null){
                 return;
             }
+            admUpdate.setUsername(username);
+            admUpdate.setPassword(password);
             admUpdate.setName(name);
             admUpdate.setEmail(email);
-            admUpdate.setUserName(userName);
-            admUpdate.setPassword(password);
             em.merge(admUpdate);   
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
