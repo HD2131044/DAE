@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -26,7 +27,9 @@ exemplo, todos os participantes classificados como inscritos à UC de DAE), para
 possa manter atualizada a lista de participantes de determinado evento;
  */
 @Entity
-@Table(name = "USERS")
+@Table(name = "USERS",
+uniqueConstraints =
+@UniqueConstraint(columnNames = {"USERNAME"}))
 @NamedQueries({
     @NamedQuery(
         name="getAllUsers",

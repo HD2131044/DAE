@@ -31,9 +31,6 @@ public class AttendantBean {
             if (em.find(Attendant.class, username) != null) {
                 throw new EntityAlreadyExistsException("A student with that username already exists.");
             }
-            /*
-            dar um event ao attendant
-            */
             Attendant attendant = new Attendant (username, password, name, email);
             em.persist(attendant);
         } catch (EntityAlreadyExistsException e) {
@@ -64,10 +61,13 @@ public class AttendantBean {
     }
 
     public void updateAttendant (Long id, String username, String password, String name, String email)throws EntityDoesNotExistsException, MyConstraintViolationException{
-         try {
-            Attendant attendant = em.find(Attendant.class, username);
+        try {
+            Attendant attendant = em.find(Attendant.class, id);
             if (attendant == null){
-                throw new EntityDoesNotExistsException("There is no attendant with that username.");
+                throw new EntityDoesNotExistsException("There is no attendant with that id.");
+            }
+            if (em.find(Attendant.class, username) != null) {
+                throw new EntityAlreadyExistsException("That username already exists.");
             }
             attendant.setUsername(username);
             attendant.setPassword(password);
@@ -83,11 +83,11 @@ public class AttendantBean {
         }
     }
     
-    public void removeAttendant(String username) throws EntityDoesNotExistsException {
+    public void removeAttendant(Long id) throws EntityDoesNotExistsException {
         try {
-            Attendant attendant = em.find(Attendant.class, username);
+            Attendant attendant = em.find(Attendant.class, id);
             if (attendant == null) {
-                throw new EntityDoesNotExistsException("There is no attendant with that username.");
+                throw new EntityDoesNotExistsException("There is no attendant with that id.");
             }
 
             for (Event event : attendant.getEvents()) {

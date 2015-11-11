@@ -2,9 +2,11 @@
 package web;
 
 import dtos.AttendantDTO;
+import ejbs.AdministratorBean;
 import ejbs.AttendantBean;
 import ejbs.CategoryBean;
 import ejbs.EventBean;
+import ejbs.ManagerBean;
 import entities.Administrator;
 import entities.Attendant;
 import entities.Category;
@@ -24,8 +26,13 @@ import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @SessionScoped
-public class AttendantManager {
+public class AdministratorManagerForAll {
     
+    
+    @EJB
+    private AdministratorBean administratorBean;
+    @EJB
+    private ManagerBean managerBean;
     @EJB
     private AttendantBean attendantBean;
     @EJB
@@ -33,30 +40,30 @@ public class AttendantManager {
     @EJB
     private CategoryBean categoryBean;
     
-    private static final Logger attendantLogger = Logger.getLogger("web.AttendantManager");
+    private static final Logger logger = Logger.getLogger("web.AdministratorManagerForAll");
     
+    private AdministratorDTO newAdministrator;
+    private AdministratorDTO currentAdministrator;
+    private ManagerDTO newManager;
+    private ManagerDTO currentManager;
     private AttendantDTO newAttendant;
     private AttendantDTO currentAttendant;
-    
-    //para usar ou adaptar???
     private EventDTO newEvent;
     private EventDTO currentEvent;
     private CategoryDTO newCategory;
     private CategotyDTO currentCategory;
     
+    private UIComponent component;
     
-    private UIComponent attendantComponent;
     
-    
-    public AttendantManager() {
+    public AdministratorManagerForAll() {
+        newAdministrator = new AdministratorDTO();
+        newManager = new ManagerDTO();
         newAttendant = new AttendantDTO();
         newEvent = new EventDTO();
         newCategory = new CategoryDTO();
     }
-    
-    
-    /////////////// ATTENDANTS /////////////////
-    
+   
     public String createAttendandt() {
         try {
             attendantBean.createAttendant(
@@ -67,9 +74,9 @@ public class AttendantManager {
             newAttendant.reset();
             return "attendant_panel?faces-redirect=true";
         } catch (EntityAlreadyExistsException | EntityDoesNotExistsException | MyConstraintViolationException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), attendantComponent, attendantLogger);
+            FacesExceptionHandler.handleException(e, e.getMessage(), component, logger);
         } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", attendantComponent, attendantLogger);
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", component, logger);
         }
         return null;
     }
@@ -78,7 +85,7 @@ public class AttendantManager {
         try {
             return attendantBean.getAllAttendants();
         } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", attendantLogger);
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
             return null;
         }
     }
@@ -94,9 +101,9 @@ public class AttendantManager {
             return "attendant_panel?faces-redirect=true";
             
         } catch (EntityDoesNotExistsException | MyConstraintViolationException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), attendantLogger);
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
         } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", attendantLogger);
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
         return "attendant_update";
     }
@@ -107,9 +114,9 @@ public class AttendantManager {
             Long id = Long.parseLong(param.getValue().toString());
             attendantBean.removeAttendant(id);
         } catch (EntityDoesNotExistsException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), attendantLogger);
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
         } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", attendantLogger);
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
     }
 
@@ -117,7 +124,7 @@ public class AttendantManager {
         try {
             return eventBean.getAttendant(currentAttendant.getUsername());
         } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", attendantLogger);
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
             return null;
         }
     }
@@ -126,7 +133,7 @@ public class AttendantManager {
         try {
             return categoryBean.getAttendant(currentAttendant.getUsername());
         } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", attendantLogger);
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
             return null;
         }
     }
@@ -137,9 +144,9 @@ public class AttendantManager {
             Long id = Long.parseLong(param.getValue().toString());
             attendantBean.enrollAttendantIntoEvent(id, currentEvent.getName());
         } catch (EntityDoesNotExistsException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), attendanLogger);
+            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
         } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", attendantLogger);
+            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
     }    
     
