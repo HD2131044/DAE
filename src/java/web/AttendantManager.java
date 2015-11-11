@@ -66,7 +66,7 @@ public class AttendantManager {
     //Category
     private Long catId;
     private String catName;
-    
+    /*
     //Outras
     private List<Administrator> administratorsM;
     private List<Manager> managersM;
