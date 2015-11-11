@@ -18,17 +18,20 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.component.UIParameter;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @SessionScoped
 public class AdministratorManagerForAll {
     
-    
+    /*
     @EJB
     private AdministratorBean administratorBean;
     @EJB
@@ -41,7 +44,7 @@ public class AdministratorManagerForAll {
     private CategoryBean categoryBean;
     
     private static final Logger logger = Logger.getLogger("web.AdministratorManagerForAll");
-    /*
+    
     private AdministratorDTO newAdministrator;
     private AdministratorDTO currentAdministrator;
     private ManagerDTO newManager;
@@ -64,6 +67,20 @@ public class AdministratorManagerForAll {
         newCategory = new CategoryDTO();
     }
    
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////// ADMINISTRATORS ////////////
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////// MANAGERS //////////////////
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////// ATTENDANTS ////////////////
+    
     public String createAttendandt() {
         try {
             attendantBean.createAttendant(
@@ -148,422 +165,129 @@ public class AdministratorManagerForAll {
         } catch (Exception e) {
             FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
         }
-    }    
+    }  
     
     
     
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////// EVENTS ////////////////////
     
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////// CATEGORIES ////////////////
     
     
     
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-/*
-    //Outras
-    private List<Administrator> administratorsM;
-    private List<Manager> managersM;
-    private List<Attendant> attendantsM;
-    private List<Event> eventsM;
-    private List<Category> categoriesM;
-    private Manager currentManagerM;
-    private Attendant currentAttendantM;
-    private Event currentEventM;
-    private Administrator currentAdministratorM;
-    
-    private ManagerDTO currentManager;
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////GETS AND SETS//////////////
 
-    public String createAdministrator(){
-        try {
-            administratorBean.createAdministrator(adminName, adminEmail, adminUserName, adminPassword);
-            clearNewAdministrator();
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Vai para criação de Administrador";
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }  
-    }
-    
-    public List<Administrator> getAllAdministrators(){
-        try {
-            this.administratorsM = administratorBean.getAllAdministrators();
-            return administratorsM; 
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    } 
-    
-    public String updateAdministrator(){
-        try {
-            administratorBean.updateAdministrator(adminId, adminName, adminEmail, adminUserName, adminPassword);
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Faz update a Administrador";
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
+    public AdministratorDTO getNewAdministrator() {
+        return newAdministrator;
     }
 
-    public void removeAdministrator(ActionEvent event){
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteAdministratorId");
-            Long id = (Long) param.getValue();
-            administratorBean.removeAdministrator(id);
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
+    public void setNewAdministrator(AdministratorDTO newAdministrator) {
+        this.newAdministrator = newAdministrator;
     }
-   
-    private void clearNewAdministrator() {
-        adminName = null;
-        adminEmail = null;
-        adminUserName = null;
-        adminPassword = null;
+
+    public AdministratorDTO getCurrentAdministrator() {
+        return currentAdministrator;
+    }
+
+    public void setCurrentAdministrator(AdministratorDTO currentAdministrator) {
+        this.currentAdministrator = currentAdministrator;
+    }
+
+    public ManagerDTO getNewManager() {
+        return newManager;
+    }
+
+    public void setNewManager(ManagerDTO newManager) {
+        this.newManager = newManager;
+    }
+
+    public ManagerDTO getCurrentManager() {
+        return currentManager;
+    }
+
+    public void setCurrentManager(ManagerDTO currentManager) {
+        this.currentManager = currentManager;
+    }
+
+    public AttendantDTO getNewAttendant() {
+        return newAttendant;
+    }
+
+    public void setNewAttendant(AttendantDTO newAttendant) {
+        this.newAttendant = newAttendant;
+    }
+
+    public AttendantDTO getCurrentAttendant() {
+        return currentAttendant;
+    }
+
+    public void setCurrentAttendant(AttendantDTO currentAttendant) {
+        this.currentAttendant = currentAttendant;
+    }
+
+    public EventDTO getNewEvent() {
+        return newEvent;
+    }
+
+    public void setNewEvent(EventDTO newEvent) {
+        this.newEvent = newEvent;
+    }
+
+    public EventDTO getCurrentEvent() {
+        return currentEvent;
+    }
+
+    public void setCurrentEvent(EventDTO currentEvent) {
+        this.currentEvent = currentEvent;
+    }
+
+    public CategoryDTO getNewCategory() {
+        return newCategory;
+    }
+
+    public void setNewCategory(CategoryDTO newCategory) {
+        this.newCategory = newCategory;
+    }
+
+    public CategotyDTO getCurrentCategory() {
+        return currentCategory;
+    }
+
+    public void setCurrentCategory(CategotyDTO currentCategory) {
+        this.currentCategory = currentCategory;
+    }
+
+    public UIComponent getComponent() {
+        return component;
+    }
+
+    public void setComponent(UIComponent component) {
+        this.component = component;
     }
     
-    public String createManager(){
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////// VALIDATORS ////////////////
+    public void validateUsername(FacesContext context, UIComponent toValidate, Object value) {
         try {
-            managerBean.createManager(manName, manEmail, manUserName, manPassword);
-            clearNewManager();
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Vai para criação de Manager";
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }  
-    }
-    /*
-    public String createAttendant(){
-        try {
-            if(atPassword.equals(atPasswordConfirm)){
-            attendantBean.createAttendant(atName, atEmail, atUserName, atPassword);
-            clearNewAttendant();
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return "administrator_panel?faces-redirect=true";
-            
+            //Your validation code goes here
+            String username = (String) value;
+            //If the validation fails
+            if (username.startsWith("xpto")) {
+                FacesMessage message = new FacesMessage("Error: invalid username.");
+                message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                context.addMessage(toValidate.getClientId(context), message);
+                ((UIInput) toValidate).setValid(false);
             }
-            
-            return "administrator_create?faces-redirect=true";
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }  
-    }
-    
-    public List<Attendant> getAllAttendants(){
-        try {
-            this.attendantsM = attendantBean.getAllAttendants();
-            return attendantsM; 
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    }
-    
-    public String updateAttendat(){
-        try {
-            attendantBean.updateAttendant(atId, atName, atEmail, atUserName, atPassword);
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Faz update a Attendant";
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-
-    public void removeAttendant(ActionEvent event){
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteAttendantId");
-            Long id = (Long) param.getValue();
-            attendantBean.removeAttendant(id);
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-   
-    private void clearNewAttendant() {
-        atName = null;
-        atEmail = null;
-        atUserName = null;
-        atPassword = null;
-    }
-    
-    public String createEvent(){
-        try {
-            eventBean.createEvent(evName,evDescription, evStartDate, evFinishDate);
-            clearNewEvent();
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Vai para criação de Event";
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }  
-    }
-    
-    public List<Event> getAllEvents(){
-        try {
-            this.eventsM = eventBean.getAllEvents();
-            return eventsM; 
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    }
-    
-    public String updateEvent(){
-        try {
-            eventBean.updateEvent(evId, evName, evStartDate, evFinishDate);
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Faz update a Event";
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-
-    public void removeEvent(ActionEvent event){
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteEventId");
-            Long id = (Long) param.getValue();
-            eventBean.removeEvent(id);
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-   
-    private void clearNewEvent() {
-        evName = null;
-        evStartDate = null;
-        evFinishDate = null;
-    }
-    
-    public String createCategory(){
-        try {
-            categoryBean.createCategory(catName);
-            clearNewCategory();
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Vai para criação de Category";
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }  
-    }
-    
-    public List<Category> getAllCategories(){
-        try {
-            this.categoriesM = categoryBean.getAllCategories();
-            return categoriesM; 
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    }
-    
-    public String updateCategory(){
-        try {
-            categoryBean.updateCategory(catId, catName);
-            //escolher acção
-            //return (String) "index?faces-redirect=true";
-            return (String) "Faz update a Category";
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-
-    public void removeCategory(ActionEvent event){
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("deleteCategoryId");
-            Long id = (Long) param.getValue();
-            categoryBean.removeCategory(id);
-        } catch (NumberFormatException ex) {
-            throw new EJBException(ex.getMessage()); 
-        }
-    }
-   
-    private void clearNewCategory() {
-        catName = null;
-    }
-    /*
-    public List<Event> getAllEventsOfCurrentManager(Manager currentManager){
-        try {
-            this.eventsM = managerBean.getAllEventsOfManager(currentManager);
-            return eventsM; 
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    }
-    
-    public List<Event> getAllEventsOfCurrentAttendant(Attendant currentAttendant) {
-        try {
-            this.eventsM = attendantBean.getAllEventsOfAttendant(currentAttendant);
-            return eventsM;  
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }
-    }
-    
-    public List<Category> getAllCategoriesOfCurrentAttendant(Attendant currentAttendant) {
-        try {
-            this.categoriesM = attendantBean.getAllCategoriesOfAttendant(currentAttendant);
-            return categoriesM;   
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }
-    }
-    
-    public List<Category> getAllCategoriesOfCurrentEvent(Event currentEvent) {
-        try {
-            this.categoriesM = eventBean.getAllCategoriesOfEvent(currentEvent);
-            return categoriesM;  
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }
-    }
-    
-    
-    public List<ManagerDTO> getAllManagers(){
-        try {
-            return managerBean.getAllManagers();
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    }
-    
-    
-    public List<Event> getAllEventsOfCurrentManager(){
-        try {
-            return managerBean.getAllEventsOfManager(currentManager.getId());
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());       
-        }
-    }
-    
-    
-}
-
-
-
-
-
-
-
-
-public class AdministratorManager {
-
-    @EJB
-    private StudentBean studentBean;
-    @EJB
-    private CourseBean courseBean;
-    @EJB
-    private SubjectBean subjectBean;
-    private static final Logger logger = Logger.getLogger("web.AdministratorManager");
-    private StudentDTO newStudent;
-    private StudentDTO currentStudent;
-    private CourseDTO newCourse;
-    private CourseDTO currentCourse;
-    private SubjectDTO newSubject;
-    private SubjectDTO currentSubject;
-    private UIComponent component;
-
-    public AdministratorManager() {
-        newStudent = new StudentDTO();
-        newCourse = new CourseDTO();
-        newSubject = new SubjectDTO();
-    }
-
-    /////////////// STUDENTS /////////////////
-    public String createStudent() {
-        try {
-            studentBean.create(
-                    newStudent.getUsername(),
-                    newStudent.getPassword(),
-                    newStudent.getName(),
-                    newStudent.getEmail(),
-                    newStudent.getCourseCode());
-            newStudent.reset();
-            return "index?faces-redirect=true";
-        } catch (EntityAlreadyExistsException | EntityDoesNotExistsException | MyConstraintViolationException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), component, logger);
         } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", component, logger);
-        }
-        return null;
-    }
-
-    public List<StudentDTO> getAllStudents() {
-        try {
-            return studentBean.getAll();
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-            return null;
+            FacesExceptionHandler.handleException(e, "Unkown error.", logger);
         }
     }
-
-    public String updateStudent() {
-        try {
-            studentBean.update(
-                    currentStudent.getUsername(),
-                    currentStudent.getPassword(),
-                    currentStudent.getName(),
-                    currentStudent.getEmail(),
-                    currentStudent.getCourseCode());
-            return "index?faces-redirect=true";
-            
-        } catch (EntityDoesNotExistsException | MyConstraintViolationException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-        }
-        return "admin_students_update";
-    }
-
-    public void removeStudent(ActionEvent event) {
-        try {
-            UIParameter param = (UIParameter) event.getComponent().findComponent("studentUsername");
-            String id = param.getValue().toString();
-            studentBean.remove(id);
-        } catch (EntityDoesNotExistsException e) {
-            FacesExceptionHandler.handleException(e, e.getMessage(), logger);
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-        }
-    }
-
-    public List<SubjectDTO> getCurrentStudentSubjects() {
-        try {
-            return subjectBean.getStudentSubjects(currentStudent.getUsername());
-        } catch (Exception e) {
-            FacesExceptionHandler.handleException(e, "Unexpected error! Try again latter!", logger);
-            return null;
-        }
-    }
-    */
+*/
  }
 

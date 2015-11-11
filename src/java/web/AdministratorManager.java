@@ -285,7 +285,7 @@ public class AdministratorManager {
     public String createAdministrator(){
         try {
             if(adminPassword.equals(adminPasswordConfirm)){
-            administratorBean.createAdministrator(adminName, adminEmail, adminUserName, adminPassword);
+            administratorBean.createAdministrator( adminUserName, adminPassword, adminName, adminEmail);
             clearNewAdministrator();
             //escolher acção
             //return (String) "index?faces-redirect=true";
@@ -310,7 +310,7 @@ public class AdministratorManager {
     
     public String updateAdministrator(){
         try {
-            administratorBean.updateAdministrator(adminId, adminName, adminEmail, adminUserName, adminPassword);
+            administratorBean.updateAdministrator(adminId, adminUserName, adminPassword, adminName, adminEmail);
             //escolher acção
             //return (String) "index?faces-redirect=true";
             return (String) "Faz update a Administrador";
@@ -338,7 +338,7 @@ public class AdministratorManager {
     
     public String createAttendant(){
         try {
-            attendantBean.createAttendant(atName, atEmail, atUserName, atPassword);
+            attendantBean.createAttendant(atUserName, atPassword, atName, atEmail);
             clearNewAttendant();
             //escolher acção
             //return (String) "index?faces-redirect=true";
