@@ -41,7 +41,7 @@ public class AdministratorManagerForAll {
     private CategoryBean categoryBean;
     
     private static final Logger logger = Logger.getLogger("web.AdministratorManagerForAll");
-    
+    /*
     private AdministratorDTO newAdministrator;
     private AdministratorDTO currentAdministrator;
     private ManagerDTO newManager;

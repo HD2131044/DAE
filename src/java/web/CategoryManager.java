@@ -281,11 +281,6 @@ public class CategoryManager {
     }
     
   
-   
-
-   
-   
-    
     public String createCategory(){
         try {
             categoryBean.createCategory(catName);

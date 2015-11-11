@@ -37,7 +37,7 @@ public class AttendantManager {
     
     private AttendantDTO newAttendant;
     private AttendantDTO currentAttendant;
-    
+    /*
     //para usar ou adaptar???
     private EventDTO newEvent;
     private EventDTO currentEvent;
@@ -559,13 +559,14 @@ public class AdministratorManager {
     }
     */
  }
-
+/*
 =======
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/*
 package web;
 import dtos.AttendantDTO;
 import ejbs.AttendantBean;
@@ -1259,14 +1260,15 @@ public class AdministratorManager {
             return null;
         }
     }
-    */
+    
  }
-
+*/
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/*
 package web;
 import dtos.AttendantDTO;
 import ejbs.AttendantBean;
@@ -1961,5 +1963,7 @@ public class AdministratorManager {
         }
     }
     */
+/*
  }
+*/
 
