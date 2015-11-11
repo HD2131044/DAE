@@ -80,9 +80,6 @@ public class ConfigBean {
            eventBean.enrollEventtInCategory(Long.parseLong("25"),Long.parseLong("28"));
            eventBean.enrollEventtInCategory(Long.parseLong("26"),Long.parseLong("28"));
            
-            
-         
-            
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
