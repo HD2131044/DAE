@@ -41,6 +41,8 @@ public class ManagerManager {
     
     private ManagerDTO currentManager;
     private ManagerDTO newManager;
+    
+    private Event currentEvent;
 
     
     public ManagerManager() {
@@ -126,6 +128,14 @@ public class ManagerManager {
         }
     }
     */
+
+    public Event getCurrentEvent() {
+        return currentEvent;
+    }
+
+    public void setCurrentEvent(Event currentEvent) {
+        this.currentEvent = currentEvent;
+    }
     
     public ManagerDTO getNewManager() {
         return newManager;
