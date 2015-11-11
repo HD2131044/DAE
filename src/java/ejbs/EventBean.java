@@ -5,8 +5,10 @@
  */
 package ejbs;
 
+import dtos.EventDTO;
 import entities.Category;
 import entities.Event;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -86,5 +88,23 @@ public class EventBean {
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
+    }
+    /*
+    public List<EventDTO> getAllEvents() {
+        try {
+            List<Event> events = (List<Event>) em.createNamedQuery("getAllEvents").getResultList();
+            return eventsToDTO(events);
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());
+        }
+    }
+    */
+    
+    private List<EventDTO> eventsToDTO(List<Event> events) {
+        List<EventDTO> dtos = new ArrayList<>();
+        for (Event c : events) {
+            dtos.add(new EventDTO(c.getId(), c.getName(), c.getDescription(), c.getStartDate(), c.getFinishDate(), c.isOpenForEnroll()));            
+        }
+        return dtos;
     }
 }

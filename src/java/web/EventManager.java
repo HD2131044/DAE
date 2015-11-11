@@ -18,6 +18,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 
@@ -25,7 +26,7 @@ import javax.faces.event.ActionEvent;
 
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class EventManager { 
   
       

@@ -36,15 +36,13 @@
             cellpadding="5">
 
             <f:facet name="header">
-                <h:outputText value="Student's Subjects" />
+                <h:outputText value="Manager's Event" />
             </f:facet>
-                 
                 <h:column>
                     <f:facet name="header">
                         <h:outputText value="Name" />
                     </f:facet>
                     <h:outputText value="#{event.name}" />
-                    <!--Falta validar o formato-->
                 </h:column>
 
                 <h:column>
@@ -75,6 +73,19 @@
                     <h:outputText value="#{event.startDate}" />
                 </h:column>
             
+                <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Actions" />
+                </f:facet>
+                <h:form>
+                    <h:commandLink id="details" action="event_attendants_update?faces-redirect=true">
+                        <h:outputText value="details" />
+                        <f:setPropertyActionListener target="#{managerManager.currentEvent}" value="#{event}" />
+                    </h:commandLink>
+                    &nbsp;
+                    
+                </h:form>
+            </h:column> 
 
         </h:dataTable>
 
