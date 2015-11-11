@@ -78,14 +78,14 @@ public class Event implements Serializable {
             = @JoinColumn(name = "ATTENDANTS_ID", referencedColumnName = "ID"))
     private List<Attendant> attendants;
     
-    private boolean OpenForEnrollment;
+    private boolean OpenForEnroll;
       
     public Event() {
         this.categories = new LinkedList<>();
         this.managers = new LinkedList<>();
         this.attendants = new LinkedList<>();
         
-        OpenForEnrollment = false;
+        OpenForEnroll = false;
     }
 
     public Event(String name,String description ,String startDate, String finishDate) {
@@ -97,15 +97,15 @@ public class Event implements Serializable {
         this.managers = new LinkedList<>();
         this.attendants = new LinkedList<>();
         
-        OpenForEnrollment = false;
+        OpenForEnroll = false;
     }
 
-    public boolean isOpenForEnrollment() {
-        return OpenForEnrollment;
+    public boolean isOpenForEnroll() {
+        return OpenForEnroll;
     }
 
-    public void setOpenForEnrollment(boolean OpenForEnrollment) {
-        this.OpenForEnrollment = OpenForEnrollment;
+    public void setOpenForEnroll(boolean OpenForEnrollment) {
+        this.OpenForEnroll = OpenForEnrollment;
     }
 
     public Long getId() {

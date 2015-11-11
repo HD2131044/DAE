@@ -12,26 +12,26 @@ public class EventDTO {
     private String description;
     private String startDate;
     private String finishDate;
-    private boolean OpenForEnrollment;
+    private boolean openForEnroll;
  
     
     public EventDTO() {
         
     }
     
-    public EventDTO(Long id,String name,String description ,String startDate, String finishDate) {
+    public EventDTO(Long id,String name,String description ,String startDate, String finishDate, Boolean openForenroll) {
         this.id = id;
         this.name = name;
         this.description=description;
         this.startDate = startDate;
         this.finishDate = finishDate;
-        OpenForEnrollment = false;
+        openForEnroll = false;
     }
     
     public void reset(){
         this.name = null;
         this.description = null;
-        this.OpenForEnrollment = false;
+        this.openForEnroll = false;
         this.finishDate = null;
         this.startDate = null;
     }
@@ -68,12 +68,12 @@ public class EventDTO {
         this.finishDate = finishDate;
     }
 
-    public boolean isOpenForEnrollment() {
-        return OpenForEnrollment;
+    public boolean isOpenForEnroll() {
+        return openForEnroll;
     }
 
-    public void setOpenForEnrollment(boolean OpenForEnrollment) {
-        this.OpenForEnrollment = OpenForEnrollment;
+    public void setOpenForEnroll(boolean OpenForEnroll) {
+        this.openForEnroll = OpenForEnroll;
     }
 
     public Long getId() {

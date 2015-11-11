@@ -5,7 +5,9 @@
  */
 package ejbs;
 
+import dtos.CategoryDTO;
 import entities.Category;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -61,5 +63,24 @@ public class CategoryBean {
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
+    }
+    
+    /*
+    public List<CategoryDTO> getAllCategories() {
+        try {
+            List<Category> categories = (List<Category>) em.createNamedQuery("getAllCategories").getResultList();
+            return categoriesToDTO(categories);
+        } catch (Exception ex) {
+            throw new EJBException(ex.getMessage());
+        }
+    }
+    */
+    
+    private List<CategoryDTO> categoriesToDTO(List<Category> categories) {
+        List<CategoryDTO> dtos = new ArrayList<>();
+        for (Category c : categories) {
+            dtos.add(new CategoryDTO(c.getId(), c.getName()));            
+        }
+        return dtos;
     }
 }
