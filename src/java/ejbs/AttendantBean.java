@@ -27,19 +27,13 @@ public class AttendantBean {
     private EntityManager em;
     
     public void createAttendant (String username, String password, String name, String email) throws EntityAlreadyExistsException, EntityDoesNotExistsException, MyConstraintViolationException {
-        try {
-            if (em.find(Attendant.class, username) != null) {
-                throw new EntityAlreadyExistsException("A student with that username already exists.");
-            }
+        //try {
+            //if (em.find(Attendant.class, username) != null) {
+            //    throw new EntityAlreadyExistsException("A student with that username already exists.");
+            //}
             Attendant attendant = new Attendant (username, password, name, email);
             em.persist(attendant);
-        } catch (EntityAlreadyExistsException e) {
-            throw e;
-        } catch (ConstraintViolationException e) {
-            throw new MyConstraintViolationException(Utils.getConstraintViolationMessages(e));
-        } catch (Exception e) {
-            throw new EJBException(e.getMessage());
-        }
+       
     }
     
     public List<AttendantDTO> getAllAttendants() {

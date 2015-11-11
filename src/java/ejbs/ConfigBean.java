@@ -49,7 +49,7 @@ public class ConfigBean {
             attendantBean.createAttendant("Attendant_username_07", "12345678", "Attendant_Name_07", "attendant_email_07@email.com");
             attendantBean.createAttendant("Attendant_username_08", "12345678", "Attendant_Name_08", "attendant_email_08@email.com");
             attendantBean.createAttendant("Attendant_username_09", "12345678", "Attendant_Name_09", "attendant_email_09@email.com");
-
+            
            eventBean.createEvent("Evento_1","Descricao Evento_1", "01/10/2015 12:00", "01/10/2015 13:00");
            eventBean.createEvent("Evento_2","Descricao Evento_2", "08/10/2015 12:00", "08/10/2015 13:00");
            eventBean.createEvent("Evento_3","Descricao Evento_3", "09/10/2015 12:00", "09/10/2015 13:00");
@@ -71,15 +71,14 @@ public class ConfigBean {
            categoryBean.createCategory("Categoria_6");
            categoryBean.createCategory("Categoria_7");
            
+           
            Long managerID = Long.parseLong("5");
            Long eventID = Long.parseLong("18");
            managerBean.enrollManagerInEvent(managerID, eventID);
-          /*  eventBean.enrollEventtInCategory(Long.parseLong("1"),Long.parseLong("1"));
-           eventBean.enrollEventtInCategory(Long.parseLong("2"),Long.parseLong("2"));
-           eventBean.enrollEventtInCategory(Long.parseLong("3"),Long.parseLong("1"));
-           eventBean.enrollEventtInCategory(Long.parseLong("4"),Long.parseLong("1"));
-        
-          */ 
+           eventBean.enrollEventtInCategory(Long.parseLong("23"),Long.parseLong("28"));
+           eventBean.enrollEventtInCategory(Long.parseLong("24"),Long.parseLong("29"));
+           eventBean.enrollEventtInCategory(Long.parseLong("25"),Long.parseLong("28"));
+           eventBean.enrollEventtInCategory(Long.parseLong("26"),Long.parseLong("28"));
            
             
          

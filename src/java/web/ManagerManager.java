@@ -13,7 +13,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 
@@ -22,7 +22,7 @@ import javax.faces.event.ActionEvent;
  * @author ITWannaBe
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class ManagerManager {
     @EJB
     private ManagerBean managerBean;
@@ -46,7 +46,8 @@ public class ManagerManager {
 
     
     public ManagerManager() {
-    
+        currentManager = new ManagerDTO();
+        currentEvent = new Event();
     }
     
     public List<ManagerDTO> getAllManagers(){

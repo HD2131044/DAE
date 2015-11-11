@@ -95,7 +95,15 @@ public class ManagerBean {
     
     public List<Event> getAllEventsOfManager(long id) {
         try {
+            
+            System.out.println("ID: " + id);
+            
             Manager man = em.find(Manager.class, id);
+            
+            if(man != null){
+                System.out.println("MANAGER: " + man.getName());
+            }
+            
             return man.getEvents();
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
